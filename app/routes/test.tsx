@@ -26,7 +26,7 @@ export const useTestLoaderFetch = () => {
 
       isFirstRef.current = false;
     }
-  }, []);
+  }, [fetcher.load]);
 
   return fetcher.data;
 };
