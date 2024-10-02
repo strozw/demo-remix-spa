@@ -10,7 +10,7 @@ import { wait } from "remix-utils/timers";
 export const clientLoader = defineClientLoader(async () => {
   await wait(2000);
 
-  return { message: "hogeee" };
+  return { message: "Test" };
 });
 
 export const clientAction = defineClientAction(async () => {});
@@ -35,6 +35,6 @@ export const useTestLoaderData = () => {
   return useRouteLoaderData<typeof clientLoader>($routeId("routes/test"));
 };
 
-export default function () {
-  return "test";
-}
+// export default function () {
+//   return "test";
+// }

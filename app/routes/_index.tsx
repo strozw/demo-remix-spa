@@ -27,6 +27,7 @@ export default function Index() {
     <div className="font-sans p-4">
       <h1 className="text-3xl">Welcome to Remix (SPA Mode)</h1>
       <div>{testData?.message}</div>
+      <div>{testData2?.message}</div>
       <ul className="list-disc mt-4 pl-6 space-y-2">
         <li>
           <Link
