@@ -10,32 +10,61 @@ declare module "remix-routes" {
   
     "": {
       params: never,
-      query: ExportedQuery<import('app/routes/_index').SearchParams>,
+      query: ExportedQuery<import('src/app/routes/_index').SearchParams>,
     };
   
     "/": {
       params: never,
-      query: ExportedQuery<import('app/root').SearchParams>,
+      query: ExportedQuery<import('src/app/root').SearchParams>,
     };
   
     "/about": {
       params: never,
-      query: ExportedQuery<import('app/routes/about').SearchParams>,
+      query: ExportedQuery<import('src/app/routes/about').SearchParams>,
     };
   
     "/about/child": {
       params: never,
-      query: ExportedQuery<import('app/routes/about.child').SearchParams>,
+      query: ExportedQuery<import('src/app/routes/about.child').SearchParams>,
     };
   
     "/about/data": {
       params: never,
-      query: ExportedQuery<import('app/routes/about.data').SearchParams>,
+      query: ExportedQuery<import('src/app/routes/about.data').SearchParams>,
+    };
+  
+    "/folders": {
+      params: never,
+      query: ExportedQuery<import('src/app/routes/folders').SearchParams>,
+    };
+  
+    "/folders/:folderId/notes": {
+      params: {
+        folderId: string | number;
+      } ,
+      query: ExportedQuery<import('src/app/routes/folders.$folderId.notes').SearchParams>,
+    };
+  
+    "/folders/uncategorized/notes": {
+      params: never,
+      query: ExportedQuery<import('src/app/routes/folders.uncategorized.notes').SearchParams>,
+    };
+  
+    "/notes": {
+      params: never,
+      query: ExportedQuery<import('src/app/routes/notes').SearchParams>,
+    };
+  
+    "/notes/:noteId": {
+      params: {
+        noteId: string | number;
+      } ,
+      query: ExportedQuery<import('src/app/routes/notes.$noteId').SearchParams>,
     };
   
     "/test": {
       params: never,
-      query: ExportedQuery<import('app/routes/test').SearchParams>,
+      query: ExportedQuery<import('src/app/routes/test').SearchParams>,
     };
   
   }
@@ -53,6 +82,11 @@ declare module "remix-routes" {
     | 'routes/about'
     | 'routes/about.child'
     | 'routes/about.data'
+    | 'routes/folders'
+    | 'routes/folders.$folderId.notes'
+    | 'routes/folders.uncategorized.notes'
+    | 'routes/notes'
+    | 'routes/notes.$noteId'
     | 'routes/test';
 
   export function $path<

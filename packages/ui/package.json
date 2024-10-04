@@ -1,0 +1,61 @@
+{
+  "name": "@demo-remix-spa/ui",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "type": "module",
+  "sideEffects": [
+    "*.css"
+  ],
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./icons": {
+      "import": "./dist/icons.js",
+      "types": "./dist/*.d.ts"
+    },
+    "./style.css": {
+      "import": "./dist/style.css"
+    }
+  },
+  "scripts": {
+    "build": "vite build --emptyOutDir",
+    "_build": "tsup src/index.ts",
+    "dev": "NODE_ENV=develop vite build --watch --sourcemap inline",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "react",
+    "ui"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@mantine/core": "^7.13.1",
+    "@mantine/form": "^7.13.1",
+    "@mantine/hooks": "^7.13.1",
+    "@mantine/tiptap": "^7.13.2",
+    "@tiptap/extension-highlight": "^2.8.0",
+    "@tiptap/extension-subscript": "^2.8.0",
+    "@tiptap/extension-superscript": "^2.8.0",
+    "@tiptap/extension-text-align": "^2.8.0",
+    "@tiptap/extension-underline": "^2.8.0",
+    "@tiptap/react": "^2.8.0",
+    "@tiptap/starter-kit": "^2.8.0"
+  },
+  "devDependencies": {
+    "@tabler/icons-react": "^3.19.0",
+    "postcss-preset-mantine": "^1.17.0",
+    "vite-plugin-dts": "^4.2.3"
+  },
+  "peerDependencies": {
+    "@types/react": "^18.2.20",
+    "@types/react-dom": "^18.2.7",
+    "react": "18.3.0-canary-14898b6a9-20240318",
+    "react-dom": "18.3.0-canary-14898b6a9-20240318"
+  }
+}
