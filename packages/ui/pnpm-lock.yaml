@@ -1,0 +1,30 @@
+lockfileVersion: '9.0'
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
+importers:
+
+  .:
+    devDependencies:
+      '@tsconfig/node20':
+        specifier: ^20.1.4
+        version: 20.1.4
+      '@tsconfig/vite-react':
+        specifier: ^3.0.2
+        version: 3.0.2
+
+packages:
+
+  '@tsconfig/node20@20.1.4':
+    resolution: {integrity: sha512-sqgsT69YFeLWf5NtJ4Xq/xAF8p4ZQHlmGW74Nu2tD4+g5fAsposc4ZfaaPixVu4y01BEiDCWLRDCvDM5JOsRxg==}
+
+  '@tsconfig/vite-react@3.0.2':
+    resolution: {integrity: sha512-AFynAtE1Un3Rko20Ghe2mVC/QWD4rStJ2PnyIZU2kzC4UyWpf1YhAEY87GojH/XPZCY8Mdt27gsYyy+6l6HV+w==}
+
+snapshots:
+
+  '@tsconfig/node20@20.1.4': {}
+
+  '@tsconfig/vite-react@3.0.2': {}

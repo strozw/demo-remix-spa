@@ -1,19 +1,20 @@
-import { useFetcher, useRouteLoaderData } from "@remix-run/react";
 import {
-  defineClientAction,
-  defineClientLoader,
-} from "@remix-run/react/dist/single-fetch";
+  type ClientLoaderFunction,
+  useFetcher,
+  useRouteLoaderData,
+} from "@remix-run/react";
 import { useEffect, useRef } from "react";
 import { $path, $routeId } from "remix-routes";
 import { wait } from "remix-utils/timers";
+
+const defineClientLoader = <T extends ClientLoaderFunction>(loader: T) =>
+  loader;
 
 export const clientLoader = defineClientLoader(async () => {
   await wait(2000);
 
   return { message: "Test" };
 });
-
-export const clientAction = defineClientAction(async () => {});
 
 export const useTestLoaderFetch = () => {
   const isFirstRef = useRef(true);
@@ -34,7 +35,3 @@ export const useTestLoaderFetch = () => {
 export const useTestLoaderData = () => {
   return useRouteLoaderData<typeof clientLoader>($routeId("routes/test"));
 };
-
-// export default function () {
-//   return "test";
-// }

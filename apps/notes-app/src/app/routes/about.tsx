@@ -1,11 +1,15 @@
-import { Link, Outlet, useRouteLoaderData } from "@remix-run/react";
-import { defineClientLoader } from "@remix-run/react/dist/single-fetch";
+import {
+  type ClientLoaderFunction,
+  Link,
+  Outlet,
+  useRouteLoaderData,
+} from "@remix-run/react";
 import { $path, $routeId } from "remix-routes";
 import { useTestLoaderFetch } from "./test";
 
-export const clientLoader = defineClientLoader(async () => {
+export const clientLoader: ClientLoaderFunction = async () => {
   return "";
-});
+};
 
 export default function AboutPage() {
   const rootData = useRouteLoaderData("root");

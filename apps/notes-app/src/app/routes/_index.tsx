@@ -1,9 +1,10 @@
 import type { MetaFunction } from "@remix-run/node";
-import { Link } from "@remix-run/react";
+import { type ClientLoaderFunction, Link } from "@remix-run/react";
 import { $path } from "remix-routes";
 import { useTestLoaderData, useTestLoaderFetch } from "./test";
+import { Title } from "@demo-remix-spa/ui";
 
-export const clientLoader = () => {
+export const clientLoader: ClientLoaderFunction = () => {
   return { message: "index" };
 };
 
@@ -16,18 +17,12 @@ export const meta: MetaFunction = () => {
 
 export default function Index() {
   const testData = useTestLoaderFetch();
-
   const testData2 = useTestLoaderData();
-
-  console.log({ testData });
-
-  console.log({ testData2 });
 
   return (
     <div className="font-sans p-4">
-      <h1 className="text-3xl">Welcome to Remix (SPA Mode)</h1>
-      <div>{testData?.message}</div>
-      <div>{testData2?.message}</div>
+      <Title order={2}>Welcome to Remix (SPA Mode)</Title>
+
       <ul className="list-disc mt-4 pl-6 space-y-2">
         <li>
           <Link
@@ -58,6 +53,10 @@ export default function Index() {
           </a>
         </li>
       </ul>
+
+      <div>{testData?.message}</div>
+
+      <div>{testData2?.message}</div>
     </div>
   );
 }
