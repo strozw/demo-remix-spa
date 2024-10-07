@@ -1,32 +1,33 @@
 {
-	"name": "@demo-remix-spa/notes-app",
-	"private": true,
-	"sideEffects": false,
-	"type": "module",
-	"scripts": {
-		"build": "remix vite:build",
-		"dev": "remix vite:dev",
-		"lint": "eslint --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint .",
-		"preview": "vite preview",
-		"check-types": "tsc"
-	},
-	"dependencies": {
-		"@demo-remix-spa/ui": "workspace:*",
-		"@remix-run/node": "^2.12.1",
-		"@remix-run/react": "^2.12.1",
-		"react": "18.3.0-canary-14898b6a9-20240318",
-		"react-dom": "18.3.0-canary-14898b6a9-20240318",
-		"remix-utils": "^7.6.0"
-	},
-	"devDependencies": {
-		"@remix-run/dev": "^2.11.2",
-		"@types/react": "^18.2.20",
-		"@types/react-dom": "^18.2.7",
-		"autoprefixer": "^10.4.19",
-		"remix-development-tools": "^4.2.2",
-		"remix-routes": "^1.7.7"
-	},
-	"engines": {
-		"node": ">=20.0.0"
-	}
+  "name": "@demo-remix-spa/notes-app",
+  "private": true,
+  "sideEffects": false,
+  "type": "module",
+  "scripts": {
+    "build": "remix vite:build",
+    "dev": "remix vite:dev",
+    "lint": "eslint --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint .",
+    "preview": "vite preview",
+    "check-types": "tsc"
+  },
+  "dependencies": {
+    "@demo-remix-spa/ui": "workspace:*",
+    "@demo-remix-spa/notes-api-client": "workspace:*",
+    "@remix-run/node": "^2.12.1",
+    "@remix-run/react": "^2.12.1",
+    "react": "18.3.0-canary-14898b6a9-20240318",
+    "react-dom": "18.3.0-canary-14898b6a9-20240318",
+    "remix-utils": "^7.6.0"
+  },
+  "devDependencies": {
+    "@remix-run/dev": "^2.11.2",
+    "@types/react": "^18.2.20",
+    "@types/react-dom": "^18.2.7",
+    "autoprefixer": "^10.4.19",
+    "remix-development-tools": "^4.2.2",
+    "remix-routes": "^1.7.7"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
 }

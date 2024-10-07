@@ -1,4 +1,3 @@
-import { resolve } from "node:path";
 import reactPlugin from "@vitejs/plugin-react-swc";
 import { defineConfig } from "vite";
 import dts from "vite-plugin-dts";
@@ -14,16 +13,14 @@ export default defineConfig({
   ],
   build: {
     target: false,
-    emptyOutDir: false,
-    // cssCodeSplit: true,
+    emptyOutDir: true,
     copyPublicDir: false,
     lib: {
       entry: {
-        index: resolve(__dirname, "src/index.ts"),
-        icons: resolve(__dirname, "src/icons.ts"),
+        index: "src/index.ts",
+        icons: "src/icons.ts",
       },
       formats: ["es"],
-      //fileName: "index",
     },
   },
 });

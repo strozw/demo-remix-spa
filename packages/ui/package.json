@@ -23,9 +23,9 @@
     }
   },
   "scripts": {
-    "build": "vite build --emptyOutDir",
-    "_build": "tsup src/index.ts",
-    "dev": "NODE_ENV=develop vite build --watch --sourcemap inline",
+    "build": "vite build",
+    "build-dev": "NODE_ENV=develop vite build --sourcemap inline",
+    "dev": "pnpm build-dev --watch --emptyOutDir false",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -49,8 +49,7 @@
   },
   "devDependencies": {
     "@tabler/icons-react": "^3.19.0",
-    "postcss-preset-mantine": "^1.17.0",
-    "vite-plugin-dts": "^4.2.3"
+    "postcss-preset-mantine": "^1.17.0"
   },
   "peerDependencies": {
     "@types/react": "^18.2.20",

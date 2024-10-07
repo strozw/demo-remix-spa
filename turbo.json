@@ -2,17 +2,21 @@
   "$schema": "https://turbo.build/schema.json",
   "tasks": {
     "build": {
-      "outputs": ["dist/**"]
+      "outputs": ["dist/**"],
+      "cache": true
+    },
+		"build-dev": {
+      "outputs": ["dist/**"],
+      "cache": true
+		},
+    "dev": {
+      "dependsOn": ["build-dev"],
+      "persistent": true,
+      "cache": false
     },
     "check-types": {
       "dependsOn": ["^check-types"]
     },
-    "dev": {
-      "dependsOn": ["@demo-remix-spa/ui#build"],
-      "persistent": true,
-      "cache": false
-    },
-    "@demo-remix-spa/ui#build": {},
     "preview": {
       "persistent": true,
       "cache": false

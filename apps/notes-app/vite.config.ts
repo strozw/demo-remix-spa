@@ -22,4 +22,7 @@ export default defineConfig({
     }),
     remixRoutes({ outDir: "./" }),
   ] as PluginOption[],
+  server: {
+    port: 4000,
+  },
 });
