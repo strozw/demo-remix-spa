@@ -11,10 +11,11 @@
     "check-types": "tsc"
   },
   "dependencies": {
-    "@demo-remix-spa/notes-api-client": "workspace:*",
+    "@demo-remix-spa/notes-api": "workspace:*",
     "@demo-remix-spa/ui": "workspace:*",
     "@remix-run/node": "^2.12.1",
     "@remix-run/react": "^2.12.1",
+    "hono": "^4.6.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "remix-island": "^0.2.0",
