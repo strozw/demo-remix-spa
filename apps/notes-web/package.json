@@ -1,5 +1,5 @@
 {
-  "name": "@demo-remix-spa/notes-app",
+  "name": "@demo-remix-spa/notes-web",
   "private": true,
   "sideEffects": false,
   "type": "module",
