@@ -1,6 +1,8 @@
 import { resolve } from "node:path";
+import { serve } from "@hono/node-server";
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
+import { cors } from "hono/cors";
 import { JSONFilePreset } from "lowdb/node";
 import { z } from "zod";
 
@@ -14,7 +16,8 @@ interface Note {
   title: string;
   content: string;
   folderId: string | null;
-  createdAt: Date;
+  createdAt: number;
+  updatedAt: number;
 }
 
 const dbJsonPath = resolve(process.cwd(), process.env.NOTES_DB || "db.json");
@@ -27,9 +30,21 @@ const db = await JSONFilePreset<{
   folders: [],
 });
 
+const allowOrigins = String(process.env.NOTES_API_ALLOW_ORIGIN ?? "").split(
+  ","
+);
+
 const app = new Hono()
+  .use(
+    cors({
+      origin: allowOrigins,
+    })
+  )
   .get("/test", async (c) => {
-    return c.text("test1");
+    return c.json({
+      dbJsonPath,
+      allowOrigins,
+    });
   })
   // Notes
   .route(
@@ -58,7 +73,8 @@ const app = new Hono()
             title,
             content,
             folderId,
-            createdAt: new Date(),
+            createdAt: Date.now(),
+            updatedAt: Date.now(),
           };
 
           await db.update((data) => {
@@ -113,6 +129,7 @@ const app = new Hono()
             title,
             content,
             folderId,
+            updatedAt: Date.now(),
           };
 
           return c.json(db.data.notes[noteIndex]);
@@ -168,4 +185,4 @@ const app = new Hono()
 
 export type AppType = typeof app;
 
-export default app;
+export { app };

@@ -1,15 +1,19 @@
-import build from "@hono/vite-build/node";
 import { defineConfig } from "vite";
 import dts from "vite-plugin-dts";
+import { externalizeDeps } from "vite-plugin-externalize-deps";
 
 export default defineConfig({
-  plugins: [
-    build({
-      entry: "./src/index.ts",
-    }),
-    dts({ rollupTypes: false }),
-  ],
+  plugins: [externalizeDeps(), dts({ rollupTypes: false })],
   build: {
-    target: "esnext",
+    target: false,
+    emptyOutDir: true,
+    copyPublicDir: false,
+    lib: {
+      entry: {
+        index: "src/index.ts",
+        bin: "src/bin.ts",
+      },
+      formats: ["es"],
+    },
   },
 });

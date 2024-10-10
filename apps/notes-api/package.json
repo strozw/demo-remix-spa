@@ -6,17 +6,22 @@
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "bin": "./dist/bin.js",
   "exports": {
     ".": {
       "import": "./dist/index.js",
       "types": "./dist/index.d.ts"
+    },
+    "./bin.js": {
+      "import": "./dist/bin.js",
+      "types": "./dist/bin.d.ts"
     }
   },
   "scripts": {
     "build": "vite build",
-    "build-dev": "NODE_ENV=development vite build --sourcemap inline",
-    "preview": "node --watch dist/index.js",
-    "dev": "pnpm run build-dev --watch & pnpm run preview"
+    "build-dev": "NODE_ENV=development vite build --sourcemap inline --emptyOutDir false",
+    "preview-watch": "node --watch ./dist/bin.js",
+    "dev": "pnpm run build-dev --watch & pnpm run preview-watch"
   },
   "dependencies": {
     "@hono/node-server": "^1.13.1",
