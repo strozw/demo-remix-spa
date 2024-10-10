@@ -1,23 +1,25 @@
-import { ActionIcon } from "@demo-remix-spa/ui";
+import { ActionIcon, Tooltip } from "@demo-remix-spa/ui";
 import { IconPlus } from "@demo-remix-spa/ui/icons";
 import { Form } from "@remix-run/react";
-import { useNotesAction } from "src/app/routes/notes";
+import { useNotesActionFetcher } from "src/shared/model/remix";
 
 export const NotesCreationButton = () => {
-	const { submit } = useNotesAction();
+  const { submit } = useNotesActionFetcher();
 
-	return (
-		<Form
-			method="post"
-			onSubmit={(event) => {
-				event.preventDefault();
+  return (
+    <Form
+      method="post"
+      onSubmit={(event) => {
+        event.preventDefault();
 
-				submit(event.currentTarget);
-			}}
-		>
-			<ActionIcon type="submit">
-				<IconPlus />
-			</ActionIcon>
-		</Form>
-	);
+        submit(event.currentTarget);
+      }}
+    >
+      <Tooltip label="Create Note" withArrow position="right">
+        <ActionIcon type="submit">
+          <IconPlus />
+        </ActionIcon>
+      </Tooltip>
+    </Form>
+  );
 };

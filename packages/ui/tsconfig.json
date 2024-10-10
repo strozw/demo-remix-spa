@@ -1,4 +1,8 @@
 {
 	"extends": "../../node_modules/@tsconfig/vite-react/tsconfig.json",
-	"include": ["src", "vite.config.mjs"]
+	"include": ["src", "vite.config.mjs"],
+	"compilerOptions": {
+		"declaration": true,
+		"declarationMap": true,
+	}
 }

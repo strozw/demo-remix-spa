@@ -105,6 +105,9 @@ importers:
       '@remix-run/react':
         specifier: ^2.12.1
         version: 2.12.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2)
+      fetch-extras:
+        specifier: ^0.1.0
+        version: 0.1.0
       hono:
         specifier: ^4.6.3
         version: 4.6.3
@@ -2821,6 +2824,10 @@ packages:
     peerDependenciesMeta:
       picomatch:
         optional: true
+
+  fetch-extras@0.1.0:
+    resolution: {integrity: sha512-O+wBTDDl50AgO4s3nhbBMvn1XX4gXjlKfnODUV/6hJlaCvUiB/oIs8xGVM0BeRmVl4ZZ24zkFb906h5w2J5XFg==}
+    engines: {node: '>=18'}
 
   filelist@1.0.4:
     resolution: {integrity: sha512-w1cEuf3S+DrLCQL7ET6kz+gmlJdbq9J7yXCSjK/OZCPA+qEN1WyF4ZAf0YYJa4/shHJra2t/d/r8SV4Ji+x+8Q==}
@@ -7756,6 +7763,8 @@ snapshots:
   fdir@6.4.0(picomatch@4.0.2):
     optionalDependencies:
       picomatch: 4.0.2
+
+  fetch-extras@0.1.0: {}
 
   filelist@1.0.4:
     dependencies:

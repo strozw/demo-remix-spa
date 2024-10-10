@@ -1,29 +1,57 @@
-import { Group, Title } from "@demo-remix-spa/ui";
-import { useLoaderData } from "@remix-run/react";
+import { Title } from "@demo-remix-spa/ui";
+import type { MetaFunction } from "@remix-run/node";
+import { Await, defer, useLoaderData } from "@remix-run/react";
+import { $params } from "remix-routes";
 import { NotesTable } from "src/features/notes-table";
+import { notesApiClient } from "src/shared/api/notes-api";
+import { defineClientLoader } from "src/shared/lib/remix";
 
-export const clientLoader = () => {
-	return {
-		notes: [
-			{ id: 1, title: "Notes1", createdAt: "2021-09-01" },
-			{ id: 2, title: "Notes2", createdAt: "2021-09-01" },
-			{ id: 3, title: "Notes3", createdAt: "2021-09-01" },
-			{ id: 4, title: "Notes4", createdAt: "2021-09-01" },
-			{ id: 5, title: "Notes5", createdAt: "2021-09-01" },
-		],
-	};
+export const clientLoader = defineClientLoader(({ params }) => {
+  const { folderId } = $params("/folders/:folderId/notes", params);
+
+  return defer({
+    folder: notesApiClient.folders[":id"]
+      .$get({
+        param: {
+          id: folderId,
+        },
+      })
+      .then((res) => res.json()),
+    notes: notesApiClient.notes
+      .$get({
+        query: {
+          folderId
+        },
+      })
+      .then((res) => res.json()),
+  });
+});
+
+export const meta: MetaFunction = () => {
+  return [{ title: "Demo Remix SPA | Uncategorized Notes" }];
 };
 
-export default function FolderNotesPage() {
-	const data = useLoaderData<typeof clientLoader>();
+export default function Index() {
+  const data = useLoaderData<typeof clientLoader>();
 
-	return (
-		<div>
-			<Title order={2} size={"h5"}>
-				<Group>FolderName</Group>
-			</Title>
+  return (
+    <div className="font-sans p-4">
+      <Title order={2}>
+        <Await resolve={data?.folder}>
+          {(folder) => <>{folder?.name} Notes</>}
+        </Await>
+      </Title>
 
-			<NotesTable data={data.notes} />
-		</div>
-	);
+      <Await resolve={data.notes}>
+        {(notes) => (
+          <NotesTable
+            data={notes.map((note) => ({
+              ...note,
+              createdAt: String(new Date(note.createdAt)),
+            }))}
+          />
+        )}
+      </Await>
+    </div>
+  );
 }

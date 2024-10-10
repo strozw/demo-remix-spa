@@ -11,7 +11,7 @@ import StarterKit from "@tiptap/starter-kit";
 import type { ComponentProps } from "react";
 
 export interface EditorProps
-  extends Omit<ComponentProps<typeof RichTextEditor>, "editor"> {
+  extends Omit<ComponentProps<typeof RichTextEditor>, "editor" | "children"> {
   content?: string;
 }
 

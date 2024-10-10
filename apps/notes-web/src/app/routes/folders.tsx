@@ -1,30 +1,27 @@
 import type { ClientActionFunctionArgs } from "@remix-run/react";
-import { $path } from "remix-routes";
-import { defineUseAction, defineUseLoader } from "src/lib/utils/remix";
+import { notesApiClient } from "src/shared/api/notes-api";
+// import { defineClientLoader } from "src/shared/lib/remix";
 
-export const clientLoader = async () => {
-	return {
-		folders: [
-			{ id: 1, name: "Folder1" },
-			{ id: 2, name: "Folder2" },
-			{ id: 3, name: "Folder3" },
-		],
-	};
-};
+// export const clientLoader = defineClientLoader(async () => {
+//   const res = await notesApiClient.folders.$get();
+
+//   const folders = await res.json();
+
+//   return { folders };
+// });
+
+// export type FoldersClientLoader = typeof clientLoader;
 
 export const clientAction = async ({ request }: ClientActionFunctionArgs) => {
-	const body = await request.formData();
+  const data = await request.formData();
 
-	console.log("aaaaaaaaaaaaaaaaaaaaaa");
-	console.log(body);
+  const res = await notesApiClient.folders.$post({
+    json: {
+      name: String(data.get("name") ?? "none"),
+    },
+  });
 
-	return {};
+  return await res.json();
 };
 
-export const useFoldersLoader = defineUseLoader<typeof clientLoader>(
-	$path("/folders"),
-);
-
-export const useFoldersAction = defineUseAction<typeof clientAction>(
-	$path("/folders"),
-);
+export type FoldersClientAction = typeof clientAction;

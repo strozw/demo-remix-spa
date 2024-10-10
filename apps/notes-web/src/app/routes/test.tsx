@@ -1,37 +1,26 @@
 import {
-  type ClientLoaderFunction,
-  useFetcher,
-  useRouteLoaderData,
+	type ClientLoaderFunction,
+	useRouteLoaderData,
 } from "@remix-run/react";
-import { useEffect, useRef } from "react";
 import { $path, $routeId } from "remix-routes";
 import { wait } from "remix-utils/timers";
-
-const defineClientLoader = <T extends ClientLoaderFunction>(loader: T) =>
-  loader;
+import {
+	defineClientLoader,
+	defineUseLoaderFetcher,
+} from "src/shared/lib/remix";
 
 export const clientLoader = defineClientLoader(async () => {
-  await wait(2000);
+	await wait(2000);
 
-  return { message: "Test" };
+	console.log("aaaaaaaaaaaaaaaaaaaaaaa");
+
+	return { message: "Test" };
 });
 
-export const useTestLoaderFetch = () => {
-  const isFirstRef = useRef(true);
-
-  const fetcher = useFetcher<typeof clientLoader>({ key: "test" });
-
-  useEffect(() => {
-    if (isFirstRef.current) {
-      fetcher.load($path("/test"));
-
-      isFirstRef.current = false;
-    }
-  }, [fetcher.load]);
-
-  return fetcher.data;
-};
+export const useTestLoaderFetch = defineUseLoaderFetcher<typeof clientLoader>(
+	$path("/test"),
+);
 
 export const useTestLoaderData = () => {
-  return useRouteLoaderData<typeof clientLoader>($routeId("routes/test"));
+	return useRouteLoaderData<typeof clientLoader>($routeId("routes/test"));
 };

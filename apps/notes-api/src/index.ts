@@ -1,8 +1,8 @@
 import { resolve } from "node:path";
-import { serve } from "@hono/node-server";
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
 import { cors } from "hono/cors";
+import { HTTPException } from "hono/http-exception";
 import { JSONFilePreset } from "lowdb/node";
 import { z } from "zod";
 
@@ -57,7 +57,7 @@ const app = new Hono()
           z.object({
             title: z.string().optional(),
             content: z.string().optional(),
-            folderId: z.string().optional(),
+            folderId: z.string().or(z.null()).optional(),
             tagIds: z.string().array().optional(),
           })
         ),
@@ -84,11 +84,34 @@ const app = new Hono()
           return c.json(note, 201);
         }
       )
-      .get("/", async (c) => {
-        await db.read();
+      .get(
+        "/",
+        zValidator(
+          "query",
+          z.object({
+            folderId: z.string().or(z.enum(['uncategorized'])).optional(),
+          })
+        ),
+        async (c) => {
+          const { folderId } = c.req.valid("query");
 
-        return c.json(db.data.notes);
-      })
+          await db.read();
+
+          if (folderId) {
+            return c.json(
+              db.data.notes.filter((note) => {
+								if (folderId === 'uncategorized') {
+									return !note.folderId
+								} else {
+									return note.folderId === folderId
+								}
+							})
+            );
+          }
+
+          return c.json(db.data.notes);
+        }
+      )
       .get("/:id", async (c) => {
         await db.read();
 
@@ -107,14 +130,14 @@ const app = new Hono()
           z.object({
             title: z.string(),
             content: z.string(),
-            folderId: z.string(),
+            folderId: z.string().or(z.null()).optional(),
             tagIds: z.string().array(),
           })
         ),
         async (c) => {
           await db.read();
 
-          const { title, content, folderId, tagIds } = c.req.valid("json");
+          const { title, content, folderId = null, tagIds } = c.req.valid("json");
 
           const noteIndex = db.data.notes.findIndex(
             (n) => n.id === c.req.param("id")
@@ -180,6 +203,19 @@ const app = new Hono()
         await db.read();
 
         return c.json(db.data.folders);
+      })
+      .get("/:id", async (c) => {
+        await db.read();
+
+        const folder = db.data.folders.find(
+          (folder) => folder.id === c.req.param("id")
+        );
+
+				if (!folder) {
+					throw new HTTPException(404)
+				}
+
+        return c.json(folder);
       })
   );
 

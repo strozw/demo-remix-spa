@@ -1,66 +1,99 @@
 import {
-	ActionIcon,
-	Button,
-	Group,
-	NavLink,
-	Text,
-	Title,
-	Tooltip,
-	UnstyledButton,
-	rem,
+  ActionIcon,
+  Group,
+  NavLink,
+  Popover,
+  Stack,
+  Text,
+  Title,
+  Tooltip,
+  useDisclosure,
 } from "@demo-remix-spa/ui";
 import { IconFolder, IconPlus } from "@demo-remix-spa/ui/icons";
-import { Form, Link } from "@remix-run/react";
+import { Await, Link } from "@remix-run/react";
 import { $path } from "remix-routes";
-import { useFoldersAction, useFoldersLoader } from "src/app/routes/folders";
+import { useRootLoaderData } from "src/shared/model/remix";
+import { FolderCreationForm } from "../folder-creation-form";
 
 export const FolderList = () => {
-	const { data: loadData } = useFoldersLoader();
+  const rootData = useRootLoaderData();
 
-	const { submit } = useFoldersAction();
+  const [opened, { close, open }] = useDisclosure(false);
 
-	return (
-		<div>
-			<Group className={""} justify="space-between">
-				<Title size="h6">Folders</Title>
-				<Tooltip label="Create collection" withArrow position="right">
-					<Form
-						method="post"
-						onSubmit={(event) => {
-							event.preventDefault();
+  return (
+    <div>
+      <Stack gap="xs">
+        <Title size="h6">
+          <Group className={""} justify="space-between">
+            <span>Folders</span>
 
-							submit(event.currentTarget);
-						}}
-					>
-						<ActionIcon type="submit" variant="outline" size="xs" color="blue">
-							<IconPlus />
-						</ActionIcon>
-					</Form>
-				</Tooltip>
-			</Group>
+            <Popover
+              width={300}
+              trapFocus
+              position="bottom"
+              withArrow
+              shadow="md"
+              closeOnEscape={true}
+              opened={opened}
+            >
+              <Popover.Target>
+                <Tooltip label="Create Folder" withArrow position="right">
+                  <ActionIcon
+                    type="submit"
+                    variant="outline"
+                    size="xs"
+                    color="blue"
+                    onClick={() => {
+                      if (opened) {
+                        close();
+                      } else {
+                        open();
+                      }
+                    }}
+                  >
+                    <IconPlus />
+                  </ActionIcon>
+                </Tooltip>
+              </Popover.Target>
 
-			<NavLink
-				component={Link}
-				to={$path("/folders/uncategorized/notes")}
-				label={
-					<Group>
-						<IconFolder /> 未分類
-					</Group>
-				}
-			/>
+              <Popover.Dropdown>
+                <FolderCreationForm onSubmit={close} />
+              </Popover.Dropdown>
+            </Popover>
+          </Group>
+        </Title>
 
-			{loadData?.folders?.map((folder) => (
-				<NavLink
-					key={folder.id}
-					component={Link}
-					to={$path("/folders/:folderId/notes", { folderId: folder.id })}
-					label={
-						<Group>
-							<IconFolder /> {folder.name}
-						</Group>
-					}
-				/>
-			))}
-		</div>
-	);
+        <Stack gap="xs">
+          <NavLink
+            component={Link}
+            to={$path("/folders/uncategorized/notes")}
+            label={
+              <Group>
+                <IconFolder /><Text>Uncategorized</Text>
+              </Group>
+            }
+          />
+
+          <Await resolve={rootData?.folders}>
+            {(folders) =>
+              folders?.map?.((folder) => (
+                <NavLink
+                  key={folder.id}
+                  component={Link}
+                  to={$path("/folders/:folderId/notes", {
+                    folderId: folder.id,
+                  })}
+                  label={
+                    <Group>
+                      <IconFolder /><Text>{folder.name}</Text>
+                    </Group>
+                  }
+                />
+              ))
+            }
+          </Await>
+        </Stack>
+      </Stack>
+    </div>
+  );
 };

@@ -1,21 +1,27 @@
 import { AppSidebarLayout, UiProvider } from "@demo-remix-spa/ui";
 import {
-  type ClientLoaderFunction,
   Links,
   Meta,
   Outlet,
   Scripts,
   ScrollRestoration,
+  defer,
 } from "@remix-run/react";
 import { createHead } from "remix-island";
 import { GlobalHeader } from "../widgets/global-header";
 import { Sidebar } from "../widgets/sidebar";
 
 import "./global.css";
+import { notesApiClient } from "src/shared/api/notes-api";
+import { defineClientLoader } from "src/shared/lib/remix";
 
-export const clientLoader: ClientLoaderFunction = () => {
-  return { message: "root" };
-};
+export const clientLoader = defineClientLoader(async ({ request }) => {
+  return defer({
+    folders: notesApiClient.folders.$get().then((res) => res.json()),
+  });
+});
+
+export type RootClientLoader = typeof clientLoader;
 
 export const Head = createHead(() => (
   <>
