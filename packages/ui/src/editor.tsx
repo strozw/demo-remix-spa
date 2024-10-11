@@ -8,14 +8,13 @@ import TextAlign from "@tiptap/extension-text-align";
 import Underline from "@tiptap/extension-underline";
 import { useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import type { ComponentProps } from "react";
 
-export interface EditorProps
-  extends Omit<ComponentProps<typeof RichTextEditor>, "editor" | "children"> {
+export interface EditorProps {
   content?: string;
+  onChange?: (value: string) => void;
 }
 
-export function Editor({ content = "", ...rest }: EditorProps) {
+export function Editor({ content = "", onChange }: EditorProps) {
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -27,10 +26,13 @@ export function Editor({ content = "", ...rest }: EditorProps) {
       TextAlign.configure({ types: ["heading", "paragraph"] }),
     ],
     content,
+    onUpdate: ({ editor }) => {
+      onChange?.(editor.getHTML());
+    },
   });
 
   return (
-    <RichTextEditor editor={editor} {...rest}>
+    <RichTextEditor editor={editor}>
       <RichTextEditor.Toolbar sticky stickyOffset={60}>
         <RichTextEditor.ControlsGroup>
           <RichTextEditor.Bold />

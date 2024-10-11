@@ -38,6 +38,13 @@ declare module "remix-routes" {
       query: ExportedQuery<import('src/app/routes/folders').SearchParams>,
     };
   
+    "/folders/:folderId": {
+      params: {
+        folderId: string | number;
+      } ,
+      query: ExportedQuery<import('src/app/routes/folders.$folderId').SearchParams>,
+    };
+  
     "/folders/:folderId/notes": {
       params: {
         folderId: string | number;
@@ -83,6 +90,7 @@ declare module "remix-routes" {
     | 'routes/about.child'
     | 'routes/about.data'
     | 'routes/folders'
+    | 'routes/folders.$folderId'
     | 'routes/folders.$folderId.notes'
     | 'routes/folders.uncategorized.notes'
     | 'routes/notes'

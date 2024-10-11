@@ -58,7 +58,6 @@ const app = new Hono()
             title: z.string().optional(),
             content: z.string().optional(),
             folderId: z.string().or(z.null()).optional(),
-            tagIds: z.string().array().optional(),
           })
         ),
         async (c) => {
@@ -72,7 +71,7 @@ const app = new Hono()
             id: crypto.randomUUID(),
             title,
             content,
-            folderId,
+            folderId: folderId || null,
             createdAt: Date.now(),
             updatedAt: Date.now(),
           };
@@ -89,7 +88,10 @@ const app = new Hono()
         zValidator(
           "query",
           z.object({
-            folderId: z.string().or(z.enum(['uncategorized'])).optional(),
+            folderId: z
+              .string()
+              .or(z.enum(["uncategorized"]))
+              .optional(),
           })
         ),
         async (c) => {
@@ -100,12 +102,12 @@ const app = new Hono()
           if (folderId) {
             return c.json(
               db.data.notes.filter((note) => {
-								if (folderId === 'uncategorized') {
-									return !note.folderId
-								} else {
-									return note.folderId === folderId
-								}
-							})
+                if (folderId === "uncategorized") {
+                  return !note.folderId;
+                }
+
+                return note.folderId === folderId;
+              })
             );
           }
 
@@ -131,13 +133,12 @@ const app = new Hono()
             title: z.string(),
             content: z.string(),
             folderId: z.string().or(z.null()).optional(),
-            tagIds: z.string().array(),
           })
         ),
         async (c) => {
           await db.read();
 
-          const { title, content, folderId = null, tagIds } = c.req.valid("json");
+          const { title, content, folderId = null } = c.req.valid("json");
 
           const noteIndex = db.data.notes.findIndex(
             (n) => n.id === c.req.param("id")
@@ -147,13 +148,15 @@ const app = new Hono()
             return c.json({ error: "Note not found" }, 404);
           }
 
-          db.data.notes[noteIndex] = {
-            ...db.data.notes[noteIndex],
-            title,
-            content,
-            folderId,
-            updatedAt: Date.now(),
-          };
+          await db.update((data) => {
+            data.notes[noteIndex] = {
+              ...data.notes[noteIndex],
+              title,
+              content,
+              folderId: folderId || null,
+              updatedAt: Date.now(),
+            };
+          });
 
           return c.json(db.data.notes[noteIndex]);
         }
@@ -211,11 +214,28 @@ const app = new Hono()
           (folder) => folder.id === c.req.param("id")
         );
 
-				if (!folder) {
-					throw new HTTPException(404)
-				}
+        if (!folder) {
+          throw new HTTPException(404);
+        }
 
         return c.json(folder);
+      })
+      .delete("/:id", async (c) => {
+        await db.read();
+
+        const index = db.data.folders.findIndex(
+          (n) => n.id === c.req.param("id")
+        );
+
+        if (index === -1) {
+          return c.json({ error: "Folder not found" }, 404);
+        }
+
+        await db.update((data) => {
+          data.folders.splice(index, 1);
+        });
+
+        return c.json({ message: "Folder deleted successfully" });
       })
   );
 

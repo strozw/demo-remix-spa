@@ -14,6 +14,7 @@ import { Await, Link } from "@remix-run/react";
 import { $path } from "remix-routes";
 import { useRootLoaderData } from "src/shared/model/remix";
 import { FolderCreationForm } from "../folder-creation-form";
+import { FolderDeleteButton } from "../folder-delete-button";
 
 export const FolderList = () => {
   const rootData = useRootLoaderData();
@@ -64,31 +65,45 @@ export const FolderList = () => {
         </Title>
 
         <Stack gap="xs">
-          <NavLink
-            component={Link}
-            to={$path("/folders/uncategorized/notes")}
-            label={
-              <Group>
-                <IconFolder /><Text>Uncategorized</Text>
-              </Group>
-            }
-          />
+          <Group>
+            <NavLink
+              w={"calc(100% - 3em)"}
+              component={Link}
+              to={$path("/folders/uncategorized/notes")}
+              label={
+                <Group>
+                  <IconFolder />
+                  <Text>Uncategorized</Text>
+                </Group>
+              }
+            />
+          </Group>
 
           <Await resolve={rootData?.folders}>
             {(folders) =>
               folders?.map?.((folder) => (
-                <NavLink
-                  key={folder.id}
-                  component={Link}
-                  to={$path("/folders/:folderId/notes", {
-                    folderId: folder.id,
-                  })}
-                  label={
-                    <Group>
-                      <IconFolder /><Text>{folder.name}</Text>
-                    </Group>
-                  }
-                />
+                <Group justify="center" key={folder.id}>
+                  <NavLink
+                    w={"calc(100% - 3em)"}
+                    component={Link}
+                    to={$path("/folders/:folderId/notes", {
+                      folderId: folder.id,
+                    })}
+                    label={
+                      <Group w="auto">
+                        <IconFolder />
+                        <Text>{folder.name}</Text>
+                      </Group>
+                    }
+                  />
+                  <Group
+                    w="auto"
+                    align="flex-end"
+                    style={{ marginLeft: "auto" }}
+                  >
+                    <FolderDeleteButton folderId={folder.id} />
+                  </Group>
+                </Group>
               ))
             }
           </Await>
