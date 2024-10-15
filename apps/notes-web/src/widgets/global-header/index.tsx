@@ -1,7 +1,7 @@
 import { Group, Text, Title } from "@demo-remix-spa/ui";
 import { IconNotes } from "@demo-remix-spa/ui/icons";
 import { Link } from "@remix-run/react";
-import { NotesCreationButton } from "../../features/notes-creation-button";
+import { NoteCreationButton } from "../../features/note-creation-button";
 
 export function GlobalHeader() {
   return (
@@ -16,7 +16,7 @@ export function GlobalHeader() {
       </Title>
 
       <Group align="flex-end" style={{ marginLeft: "auto" }}>
-        <NotesCreationButton />
+        <NoteCreationButton />
       </Group>
     </>
   );
