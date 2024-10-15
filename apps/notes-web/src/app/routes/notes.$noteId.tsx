@@ -1,3 +1,5 @@
+import { useForm } from "@conform-to/react";
+import { parseWithZod } from "@conform-to/zod";
 import {
   Button,
   Group,
@@ -11,16 +13,31 @@ import {
 import { IconNotes, IconRecycle, IconTrash } from "@demo-remix-spa/ui/icons";
 import {
   Await,
-  redirect,
+  Form,
+  json,
+  useActionData,
   useFetcher,
   useLoaderData,
   useParams,
 } from "@remix-run/react";
-import { useCallback, useRef } from "react";
 import { $params, $path } from "remix-routes";
 import { notesApiClient } from "src/shared/api/notes-api";
 import { defineClientAction, defineClientLoader } from "src/shared/lib/remix";
 import { useRootLoaderData } from "src/shared/model/remix";
+import { z } from "zod";
+
+const updateSchema = z.object({
+  title: z.string(),
+  folderId: z
+    .string()
+    .nullable()
+    .optional()
+    .transform((value) => String(value || "")),
+  content: z
+    .string()
+    .optional()
+    .transform((value) => String(value || "")),
+});
 
 export const clientLoader = defineClientLoader(async ({ params }) => {
   const { noteId } = $params("/notes/:noteId", params);
@@ -37,47 +54,29 @@ type NotesDetailClientLoader = typeof clientLoader;
 export const clientAction = defineClientAction(async ({ request, params }) => {
   const { noteId } = $params("/notes/:noteId", params);
 
-  const updates = Object.fromEntries(await request.formData());
+  const formData = await request.formData();
 
-  switch (request.method.toLowerCase()) {
-    case "put": {
-      const res = await notesApiClient.notes[":id"].$put({
-        param: { id: noteId },
-        json: {
-          title: String(updates.title) ?? "",
-          folderId: String(updates.folderId) ?? "",
-          content: String(updates.content) ?? "",
-        },
-      });
+  const submission = parseWithZod(formData, { schema: updateSchema });
 
-      return await res.json();
-    }
-
-    case "delete": {
-      const retrieveRes = await notesApiClient.notes[":id"].$get({
-        param: { id: noteId },
-      });
-
-      const note = await retrieveRes.json();
-
-      if ("error" in note) {
-        throw new Error(`Note with ID ${noteId} could not be found`);
-      }
-
-      await notesApiClient.notes[":id"].$delete({
-        param: { id: noteId },
-      });
-
-      return redirect(
-        note.folderId
-          ? $path("/folders/:folderId/notes", {
-              folderId: note.folderId,
-            })
-          : $path("/folders/uncategorized/notes")
-      );
-    }
+  if (submission.status !== "success") {
+    return json(submission.reply());
   }
+
+  try {
+    await notesApiClient.notes[":id"].$put({
+      param: { id: noteId },
+      json: submission.value,
+    });
+  } catch (error) {
+    return submission.reply({
+      formErrors: ["updated failed"],
+    });
+  }
+
+  return json(submission.reply());
 });
+
+type NotesDetailClientAction = typeof clientAction;
 
 export default function NotesDetailPage() {
   const params = useParams();
@@ -86,21 +85,35 @@ export default function NotesDetailPage() {
 
   const rootData = useRootLoaderData();
 
-  const fetcher = useFetcher();
-
   const notesDetailData = useLoaderData<NotesDetailClientLoader>();
 
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
-
-  const handleEditorChange = useCallback((value: string) => {
-    if (textareaRef.current) {
-      textareaRef.current.value = value;
-    }
-  }, []);
+  const updateLastResult = useActionData<NotesDetailClientAction>();
 
   if ("error" in notesDetailData) {
     throw new Error(notesDetailData.error);
   }
+
+  const [form, fields] = useForm({
+    // Sync the result of last submission
+    lastResult: updateLastResult,
+
+    defaultValue: {
+      title: notesDetailData.title,
+      folderId: notesDetailData.folderId,
+      content: notesDetailData.content,
+    },
+
+    // Reuse the validation logic on the client
+    onValidate({ formData }) {
+      return parseWithZod(formData, { schema: updateSchema });
+    },
+
+    // Validate the form on blur event triggered
+    shouldValidate: "onBlur",
+    shouldRevalidate: "onInput",
+  });
+
+  const destroyFetcher = useFetcher();
 
   return (
     <Stack gap={"sm"}>
@@ -111,21 +124,25 @@ export default function NotesDetailPage() {
         </Group>
       </Title>
 
-      <fetcher.Form method="put">
+      <Form method="put" id={form.id} onSubmit={form.onSubmit} noValidate>
         <Stack gap="sm">
           <TextInput
             autoFocus={true}
             label="Title"
-            name="title"
-            defaultValue={notesDetailData.title}
+            key={fields.title.key}
+            name={fields.title.name}
+            defaultValue={fields.title.initialValue}
+            error={fields.title.errors}
           />
 
           <Await resolve={rootData?.folders}>
             {(folders) => (
               <NativeSelect
                 label="Folder"
-                name="folderId"
-                defaultValue={notesDetailData.folderId ?? ""}
+                key={fields.folderId.key}
+                name={fields.folderId.name}
+                defaultValue={fields.folderId.initialValue}
+                error={fields.folderId.errors}
                 data={[
                   { value: "", label: "Uncategorzied" },
                   ...(folders ?? []).map((folder) => ({
@@ -139,9 +156,10 @@ export default function NotesDetailPage() {
 
           <Textarea
             label="Content"
-            name="content"
-            defaultValue={notesDetailData.content}
-            content={notesDetailData.content}
+            key={fields.content.key}
+            name={fields.content.name}
+            defaultValue={fields.content.initialValue}
+            error={fields.content.errors}
             styles={{
               input: {
                 minHeight: "200px",
@@ -156,9 +174,12 @@ export default function NotesDetailPage() {
             </Group>
           </Button>
         </Stack>
-      </fetcher.Form>
+      </Form>
 
-      <fetcher.Form method="delete">
+      <destroyFetcher.Form
+        method="delete"
+        action={$path("/notes/:noteId/destroy", { noteId })}
+      >
         <Stack>
           <Button type="submit" color="red">
             <Group gap="sm">
@@ -167,7 +188,7 @@ export default function NotesDetailPage() {
             </Group>
           </Button>
         </Stack>
-      </fetcher.Form>
+      </destroyFetcher.Form>
     </Stack>
   );
 }

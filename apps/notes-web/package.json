@@ -11,6 +11,8 @@
     "check-types": "tsc"
   },
   "dependencies": {
+    "@conform-to/react": "^1.2.2",
+    "@conform-to/zod": "^1.2.2",
     "@demo-remix-spa/notes-api": "workspace:*",
     "@demo-remix-spa/ui": "workspace:*",
     "@remix-run/node": "^2.12.1",
@@ -20,7 +22,8 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "remix-island": "^0.2.0",
-    "remix-utils": "^7.6.0"
+    "remix-utils": "^7.6.0",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@remix-run/dev": "^2.11.2",
