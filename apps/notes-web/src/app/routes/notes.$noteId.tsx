@@ -21,6 +21,7 @@ import {
   useParams,
 } from "@remix-run/react";
 import { $params, $path } from "remix-routes";
+import { NoteDeleteButton } from "src/features/note-delete-button";
 import { notesApiClient } from "src/shared/api/notes-api";
 import { defineClientAction, defineClientLoader } from "src/shared/lib/remix";
 import { useRootLoaderData } from "src/shared/model/remix";
@@ -113,8 +114,6 @@ export default function NotesDetailPage() {
     shouldRevalidate: "onInput",
   });
 
-  const destroyFetcher = useFetcher();
-
   return (
     <Stack gap={"sm"}>
       <Title order={2} size="h5">
@@ -176,19 +175,7 @@ export default function NotesDetailPage() {
         </Stack>
       </Form>
 
-      <destroyFetcher.Form
-        method="delete"
-        action={$path("/notes/:noteId/destroy", { noteId })}
-      >
-        <Stack>
-          <Button type="submit" color="red">
-            <Group gap="sm">
-              <IconTrash />
-              <span>Delete</span>
-            </Group>
-          </Button>
-        </Stack>
-      </destroyFetcher.Form>
+      <NoteDeleteButton noteId={noteId} />
     </Stack>
   );
 }
