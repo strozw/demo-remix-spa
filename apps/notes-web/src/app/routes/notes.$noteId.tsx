@@ -1,14 +1,12 @@
 import {
   Button,
-  Editor,
   Group,
-  Input,
   NativeSelect,
   Stack,
   Text,
   TextInput,
+  Textarea,
   Title,
-  VisuallyHidden,
 } from "@demo-remix-spa/ui";
 import { IconNotes, IconRecycle, IconTrash } from "@demo-remix-spa/ui/icons";
 import {
@@ -116,6 +114,7 @@ export default function NotesDetailPage() {
       <fetcher.Form method="put">
         <Stack gap="sm">
           <TextInput
+            autoFocus={true}
             label="Title"
             name="title"
             defaultValue={notesDetailData.title}
@@ -138,17 +137,17 @@ export default function NotesDetailPage() {
             )}
           </Await>
 
-          <Input.Wrapper>
-            <Input.Label>Content</Input.Label>
-            <Editor
-              onChange={handleEditorChange}
-              content={notesDetailData.content}
-            />
-          </Input.Wrapper>
-
-          <VisuallyHidden>
-            <textarea ref={textareaRef} name="content" />
-          </VisuallyHidden>
+          <Textarea
+            label="Content"
+            name="content"
+            defaultValue={notesDetailData.content}
+            content={notesDetailData.content}
+            styles={{
+              input: {
+                minHeight: "200px",
+              },
+            }}
+          />
 
           <Button type="submit">
             <Group gap="sm">
