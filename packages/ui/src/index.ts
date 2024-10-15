@@ -11,9 +11,11 @@ export {
   Text,
   Title,
   ActionIcon,
+  Anchor,
   Button,
   NavLink,
   Tooltip,
   Popover,
+  Table,
 } from "@mantine/core";
 export { notifications } from "@mantine/notifications";

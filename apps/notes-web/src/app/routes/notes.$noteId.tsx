@@ -1,4 +1,4 @@
-import { useForm } from "@conform-to/react";
+import { getInputProps, getTextareaProps, useForm } from "@conform-to/react";
 import { parseWithZod } from "@conform-to/zod";
 import {
   Button,
@@ -10,19 +10,19 @@ import {
   Textarea,
   Title,
 } from "@demo-remix-spa/ui";
-import { IconNotes, IconRecycle, IconTrash } from "@demo-remix-spa/ui/icons";
+import { IconNotes, IconRecycle } from "@demo-remix-spa/ui/icons";
 import {
   Await,
-  Form,
   json,
-  useActionData,
   useFetcher,
   useLoaderData,
   useParams,
 } from "@remix-run/react";
+import { useEffect } from "react";
 import { $params, $path } from "remix-routes";
 import { NoteDeleteButton } from "src/features/note-delete-button";
 import { notesApiClient } from "src/shared/api/notes-api";
+import usePrevious from "src/shared/lib/react";
 import { defineClientAction, defineClientLoader } from "src/shared/lib/remix";
 import { useRootLoaderData } from "src/shared/model/remix";
 import { z } from "zod";
@@ -84,11 +84,13 @@ export default function NotesDetailPage() {
 
   const { noteId } = $params("/notes/:noteId", params);
 
+  const prevNoteId = usePrevious(noteId);
+
   const rootData = useRootLoaderData();
 
   const notesDetailData = useLoaderData<NotesDetailClientLoader>();
 
-  const updateLastResult = useActionData<NotesDetailClientAction>();
+  const fetcher = useFetcher<NotesDetailClientAction>();
 
   if ("error" in notesDetailData) {
     throw new Error(notesDetailData.error);
@@ -96,7 +98,7 @@ export default function NotesDetailPage() {
 
   const [form, fields] = useForm({
     // Sync the result of last submission
-    lastResult: updateLastResult,
+    lastResult: fetcher.data,
 
     defaultValue: {
       title: notesDetailData.title,
@@ -114,6 +116,15 @@ export default function NotesDetailPage() {
     shouldRevalidate: "onInput",
   });
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  useEffect(() => {
+    // NOTE: When creating a note in this view, this component will not be remounted.
+    // Therefore, if prevNoteId is not equal to noteId, reset the form.
+    if (prevNoteId && prevNoteId !== noteId) {
+      form.reset();
+    }
+  }, [prevNoteId, noteId]);
+
   return (
     <Stack gap={"sm"}>
       <Title order={2} size="h5">
@@ -123,14 +134,20 @@ export default function NotesDetailPage() {
         </Group>
       </Title>
 
-      <Form method="put" id={form.id} onSubmit={form.onSubmit} noValidate>
+      <pre>{JSON.stringify(notesDetailData, null, 2)}</pre>
+
+      <fetcher.Form
+        method="put"
+        action={$path("/notes/:noteId", { noteId })}
+        onSubmit={form.onSubmit}
+        id={form.id}
+        noValidate
+      >
         <Stack gap="sm">
           <TextInput
             autoFocus={true}
             label="Title"
-            key={fields.title.key}
-            name={fields.title.name}
-            defaultValue={fields.title.initialValue}
+            {...getInputProps(fields.title, { type: "text" })}
             error={fields.title.errors}
           />
 
@@ -140,7 +157,7 @@ export default function NotesDetailPage() {
                 label="Folder"
                 key={fields.folderId.key}
                 name={fields.folderId.name}
-                defaultValue={fields.folderId.initialValue}
+                // defaultValue={notesDetailData.folderId ?? ""}
                 error={fields.folderId.errors}
                 data={[
                   { value: "", label: "Uncategorzied" },
@@ -155,9 +172,8 @@ export default function NotesDetailPage() {
 
           <Textarea
             label="Content"
-            key={fields.content.key}
-            name={fields.content.name}
-            defaultValue={fields.content.initialValue}
+            {...getTextareaProps(fields.content)}
+            // defaultValue={notesDetailData.content}
             error={fields.content.errors}
             styles={{
               input: {
@@ -166,14 +182,18 @@ export default function NotesDetailPage() {
             }}
           />
 
-          <Button type="submit">
+          <Button
+            type="submit"
+            disabled={!form.valid || !form.dirty || form.status === "success"}
+            loading={fetcher.state === "submitting"}
+          >
             <Group gap="sm">
               <IconRecycle />
               <span> Save</span>
             </Group>
           </Button>
         </Stack>
-      </Form>
+      </fetcher.Form>
 
       <NoteDeleteButton noteId={noteId} />
     </Stack>

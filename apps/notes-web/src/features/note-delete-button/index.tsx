@@ -12,10 +12,14 @@ export const NoteDeleteButton = ({ noteId }: { noteId: string }) => {
       action={$path("/notes/:noteId/destroy", { noteId })}
     >
       <Stack>
-        <Button type="submit" color="red">
+        <Button
+          type="submit"
+          color="red"
+          loading={fetcher.state === "submitting"}
+        >
           <Group gap="sm">
             <IconTrash />
-            <span> Delete </span>
+            <span>Delete</span>
           </Group>
         </Button>
       </Stack>
