@@ -118,8 +118,7 @@ export default function NotesDetailPage() {
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
-    // NOTE: When creating a note in this view, this component will not be remounted.
-    // Therefore, if prevNoteId is not equal to noteId, reset the form.
+    // NOTE: When creating a note in this view, this component will not be remounted. Therefore, if prevNoteId is not equal to noteId, reset the form.
     if (prevNoteId && prevNoteId !== noteId) {
       form.reset();
     }
@@ -127,75 +126,77 @@ export default function NotesDetailPage() {
 
   return (
     <Stack gap={"sm"}>
-      <Title order={2} size="h5">
-        <Group gap="xs">
-          <IconNotes />
-          <Text fw="inherit">#{noteId}</Text>
-        </Group>
-      </Title>
+      <Group gap="xs">
+        <Title order={2} size="h5">
+          <Group gap="xs">
+            <IconNotes />
+            <Text fw="inherit">#{noteId}</Text>
+          </Group>
+        </Title>
+      </Group>
 
-      <pre>{JSON.stringify(notesDetailData, null, 2)}</pre>
+      <Stack gap="xl">
+        <fetcher.Form
+          method="put"
+          action={$path("/notes/:noteId", { noteId })}
+          onSubmit={form.onSubmit}
+          id={form.id}
+          noValidate
+        >
+          <Stack gap="sm">
+            <TextInput
+              autoFocus={true}
+              label="Title"
+              {...getInputProps(fields.title, { type: "text" })}
+              error={fields.title.errors}
+            />
 
-      <fetcher.Form
-        method="put"
-        action={$path("/notes/:noteId", { noteId })}
-        onSubmit={form.onSubmit}
-        id={form.id}
-        noValidate
-      >
-        <Stack gap="sm">
-          <TextInput
-            autoFocus={true}
-            label="Title"
-            {...getInputProps(fields.title, { type: "text" })}
-            error={fields.title.errors}
-          />
+            <Await resolve={rootData?.folders}>
+              {(folders) => (
+                <NativeSelect
+                  label="Folder"
+                  key={fields.folderId.key}
+                  name={fields.folderId.name}
+                  // defaultValue={notesDetailData.folderId ?? ""}
+                  error={fields.folderId.errors}
+                  data={[
+                    { value: "", label: "Uncategorzied" },
+                    ...(folders ?? []).map((folder) => ({
+                      label: folder.name,
+                      value: folder.id,
+                    })),
+                  ]}
+                />
+              )}
+            </Await>
 
-          <Await resolve={rootData?.folders}>
-            {(folders) => (
-              <NativeSelect
-                label="Folder"
-                key={fields.folderId.key}
-                name={fields.folderId.name}
-                // defaultValue={notesDetailData.folderId ?? ""}
-                error={fields.folderId.errors}
-                data={[
-                  { value: "", label: "Uncategorzied" },
-                  ...(folders ?? []).map((folder) => ({
-                    label: folder.name,
-                    value: folder.id,
-                  })),
-                ]}
-              />
-            )}
-          </Await>
+            <Textarea
+              label="Content"
+              {...getTextareaProps(fields.content)}
+              // defaultValue={notesDetailData.content}
+              error={fields.content.errors}
+              styles={{
+                input: {
+                  minHeight: "200px",
+                },
+              }}
+            />
 
-          <Textarea
-            label="Content"
-            {...getTextareaProps(fields.content)}
-            // defaultValue={notesDetailData.content}
-            error={fields.content.errors}
-            styles={{
-              input: {
-                minHeight: "200px",
-              },
-            }}
-          />
+            <Button
+              type="submit"
+              disabled={!form.valid || !form.dirty || form.status === "success"}
+              loading={fetcher.state === "submitting"}
+            >
+              <Group gap="sm">
+                <IconRecycle />
+                <span> Save</span>
+              </Group>
+            </Button>
+          </Stack>
+        </fetcher.Form>
 
-          <Button
-            type="submit"
-            disabled={!form.valid || !form.dirty || form.status === "success"}
-            loading={fetcher.state === "submitting"}
-          >
-            <Group gap="sm">
-              <IconRecycle />
-              <span> Save</span>
-            </Group>
-          </Button>
-        </Stack>
-      </fetcher.Form>
-
-      <NoteDeleteButton noteId={noteId} />
+        <NoteDeleteButton noteId={noteId} />
+      </Stack>
     </Stack>
   );
 }
