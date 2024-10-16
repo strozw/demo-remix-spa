@@ -18,20 +18,13 @@
     "@remix-run/node": "^2.12.1",
     "@remix-run/react": "^2.12.1",
     "fetch-extras": "^0.1.0",
-    "hono": "^4.6.3",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
     "remix-island": "^0.2.0",
     "remix-utils": "^7.6.0",
-    "zod": "^3.23.8"
+    "remix-routes": "^1.7.7"
   },
   "devDependencies": {
     "@remix-run/dev": "^2.11.2",
-    "@types/react": "^18.2.20",
-    "@types/react-dom": "^18.2.7",
-    "autoprefixer": "^10.4.19",
-    "remix-development-tools": "^4.2.2",
-    "remix-routes": "^1.7.7"
+    "remix-development-tools": "^4.2.2"
   },
   "engines": {
     "node": ">=20.0.0"
