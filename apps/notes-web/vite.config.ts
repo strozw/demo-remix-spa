@@ -1,7 +1,7 @@
 import { vitePlugin as remix } from "@remix-run/dev";
 import { remixDevTools } from "remix-development-tools";
 import { remixRoutes } from "remix-routes/vite";
-import { type PluginOption, defineConfig } from "vite";
+import { defineConfig } from "vite";
 import happyCssModules from "vite-plugin-happy-css-modules";
 import tsconfigPaths from "vite-tsconfig-paths";
 
@@ -21,7 +21,7 @@ export default defineConfig({
       },
     }),
     remixRoutes({ outDir: "./" }),
-  ] as PluginOption[],
+  ],
   server: {
     port: 4000,
   },
