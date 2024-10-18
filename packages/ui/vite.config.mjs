@@ -3,9 +3,11 @@ import { defineConfig } from "vite";
 import dts from "vite-plugin-dts";
 import { externalizeDeps } from "vite-plugin-externalize-deps";
 import happyCssModules from "vite-plugin-happy-css-modules";
+import tsconfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig({
   plugins: [
+    tsconfigPaths(),
     reactPlugin(),
     happyCssModules({ pattern: "./src/**/*.module.css" }),
     dts(),

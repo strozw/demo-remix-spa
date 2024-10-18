@@ -8,7 +8,9 @@
     "dev": "remix vite:dev",
     "lint": "eslint --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint .",
     "preview": "vite preview",
-    "check-types": "tsc"
+    "check-types": "tsc",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "dependencies": {
     "@conform-to/react": "^1.2.2",
@@ -19,8 +21,8 @@
     "@remix-run/react": "^2.12.1",
     "fetch-extras": "^0.1.0",
     "remix-island": "^0.2.0",
-    "remix-utils": "^7.6.0",
-    "remix-routes": "^1.7.7"
+    "remix-routes": "^1.7.7",
+    "remix-utils": "^7.6.0"
   },
   "devDependencies": {
     "@remix-run/dev": "^2.11.2",
