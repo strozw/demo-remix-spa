@@ -1,28 +1,37 @@
 {
-  "$schema": "https://turbo.build/schema.json",
-  "globalDependencies": [".env"],
-  "globalEnv": ["NOTES_DB", "NOTES_API_ALLOW_ORIGIN"],
-  "tasks": {
-    "build": {
-      "dependsOn": ["^build"],
-      "outputs": ["dist/**"],
-      "cache": true
-    },
-    "build-dev": {
-      "dependsOn": ["^build-dev"],
-      "cache": false
-    },
-    "dev": {
-      "dependsOn": ["^build-dev"],
-      "persistent": true,
-      "cache": false
-    },
-    "check-types": {
-      "dependsOn": ["^check-types"]
-    },
-    "preview": {
-      "persistent": true,
-      "cache": false
-    }
-  }
+	"$schema": "https://turbo.build/schema.json",
+	"globalDependencies": [".env"],
+	"globalEnv": ["NOTES_DB", "NOTES_API_ALLOW_ORIGIN"],
+	"tasks": {
+		"build": {
+			"dependsOn": ["^build"],
+			"outputs": ["dist/**", "build/**"],
+			"cache": true
+		},
+		"build-dev": {
+			"cache": false
+		},
+		"dev": {
+			"dependsOn": ["^build-dev"],
+			"persistent": true,
+			"cache": false
+		},
+		"check-types": {
+			"dependsOn": ["^check-types"]
+		},
+		"preview": {
+			"persistent": true,
+			"cache": false
+		},
+		"build-storybook": {
+			"dependsOn": ["^build"],
+			"outputs": ["storybook-static/**"],
+			"cache": true
+		},
+		"storybook": {
+			"dependsOn": ["^build-dev"],
+			"persistent": true,
+			"cache": false
+		}
+	}
 }
