@@ -28,7 +28,10 @@ import { useRootLoaderData } from "src/shared/model/remix";
 import { z } from "zod";
 
 const updateSchema = z.object({
-  title: z.string(),
+  title: z
+    .string()
+    .optional()
+    .transform((value) => String(value || "")),
   folderId: z
     .string()
     .nullable()

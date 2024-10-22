@@ -21,15 +21,14 @@ export default defineWorkspace([
     test: {
       name: "component",
       include: ["src/**/*.stories.?(m)[jt]s?(x)"],
-      // environment: "happy-dom",
+      environment: "happy-dom",
       browser: {
         enabled: true,
         name: "chromium",
         provider: "playwright",
         headless: true,
       },
-      // https://vitest.dev/config/#isolate
-      isolate: false,
+      // isolate: false,
       setupFiles: ["./.storybook/vitest.setup.ts"],
     },
   },

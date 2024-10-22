@@ -1,4 +1,3 @@
-import { AppSidebarLayout, UiProvider } from "@demo-remix-spa/ui";
 import {
   Links,
   Meta,
@@ -14,6 +13,8 @@ import { Sidebar } from "../widgets/sidebar";
 import "./global.css";
 import { notesApiClient } from "src/shared/api/notes-api";
 import { defineClientLoader } from "src/shared/lib/remix";
+import { AppSidebarLayout } from "src/shared/ui/app-sidebar-layout";
+import { AppShell } from "./app-shell";
 
 export const clientLoader = defineClientLoader(async ({ request }) => {
   return defer({
@@ -34,10 +35,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <Head />
-      <UiProvider>
+      <AppShell>
         {children}
         <ScrollRestoration />
-      </UiProvider>
+      </AppShell>
       <Scripts />
     </>
   );

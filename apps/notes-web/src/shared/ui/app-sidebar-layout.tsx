@@ -1,9 +1,5 @@
-import { AppShell, Burger, Group } from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
+import {Group, useDisclosure, AppShell, Burger } from "@demo-remix-spa/ui";
 import type { PropsWithChildren } from "react";
-
-export const Shell = AppShell;
-
 interface AppSidebarLayout
   extends PropsWithChildren<{
     header: React.ReactNode;

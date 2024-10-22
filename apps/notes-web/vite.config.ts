@@ -9,7 +9,7 @@ export default defineConfig({
   plugins: [
     tsconfigPaths(),
     happyCssModules({ pattern: "src/**/*.module.{css,scss,less}" }),
-    // `remix` より前に追加が必要
+    // NOTE: `remix` より前に追加しておく必要がある
     remixDevTools(),
     remix({
       ssr: false,

@@ -1,4 +1,5 @@
 import type { Preview } from "@storybook/react";
+import { AppShell } from "src/app/app-shell";
 
 const preview: Preview = {
   parameters: {
@@ -9,6 +10,11 @@ const preview: Preview = {
       },
     },
   },
+  decorators: [
+    (storyFn) => {
+      return <AppShell>{storyFn()}</AppShell>;
+    },
+  ],
 };
 
 export default preview;
