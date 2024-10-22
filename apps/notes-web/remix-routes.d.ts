@@ -33,16 +33,11 @@ declare module "remix-routes" {
       query: ExportedQuery<import('src/app/routes/about.data').SearchParams>,
     };
   
-    "/folders": {
-      params: never,
-      query: ExportedQuery<import('src/app/routes/folders').SearchParams>,
-    };
-  
-    "/folders/:folderId": {
+    "/folders/:folderId/destroy": {
       params: {
         folderId: string | number;
       } ,
-      query: ExportedQuery<import('src/app/routes/folders.$folderId').SearchParams>,
+      query: ExportedQuery<import('src/app/routes/folders.$folderId.destroy').SearchParams>,
     };
   
     "/folders/:folderId/notes": {
@@ -52,14 +47,14 @@ declare module "remix-routes" {
       query: ExportedQuery<import('src/app/routes/folders.$folderId.notes').SearchParams>,
     };
   
+    "/folders/new": {
+      params: never,
+      query: ExportedQuery<import('src/app/routes/folders.new').SearchParams>,
+    };
+  
     "/folders/uncategorized/notes": {
       params: never,
       query: ExportedQuery<import('src/app/routes/folders.uncategorized.notes').SearchParams>,
-    };
-  
-    "/notes": {
-      params: never,
-      query: ExportedQuery<import('src/app/routes/notes').SearchParams>,
     };
   
     "/notes/:noteId": {
@@ -74,6 +69,11 @@ declare module "remix-routes" {
         noteId: string | number;
       } ,
       query: ExportedQuery<import('src/app/routes/notes.$noteId.destroy').SearchParams>,
+    };
+  
+    "/notes/new": {
+      params: never,
+      query: ExportedQuery<import('src/app/routes/notes.new').SearchParams>,
     };
   
     "/test": {
@@ -96,13 +96,13 @@ declare module "remix-routes" {
     | 'routes/about'
     | 'routes/about.child'
     | 'routes/about.data'
-    | 'routes/folders'
-    | 'routes/folders.$folderId'
+    | 'routes/folders.$folderId.destroy'
     | 'routes/folders.$folderId.notes'
+    | 'routes/folders.new'
     | 'routes/folders.uncategorized.notes'
-    | 'routes/notes'
     | 'routes/notes.$noteId'
     | 'routes/notes.$noteId.destroy'
+    | 'routes/notes.new'
     | 'routes/test';
 
   export function $path<

@@ -23,7 +23,7 @@ export default defineWorkspace([
       include: ["src/**/*.stories.?(m)[jt]s?(x)"],
       environment: "happy-dom",
       browser: {
-        enabled: true,
+        enabled: false,
         name: "chromium",
         provider: "playwright",
         headless: true,

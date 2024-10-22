@@ -17,15 +17,16 @@ import {
   useFetcher,
   useLoaderData,
   useParams,
+  useRouteLoaderData,
 } from "@remix-run/react";
 import { useEffect } from "react";
-import { $params, $path } from "remix-routes";
+import { $params, $path, $routeId } from "remix-routes";
 import { NoteDeleteButton } from "src/features/note-delete-button";
 import { notesApiClient } from "src/shared/api/notes-api";
 import usePrevious from "src/shared/lib/react";
 import { defineClientAction, defineClientLoader } from "src/shared/lib/remix";
-import { useRootLoaderData } from "src/shared/model/remix";
 import { z } from "zod";
+import type { RootClientLoader } from "../root";
 
 const updateSchema = z.object({
   title: z
@@ -89,7 +90,7 @@ export default function NotesDetailPage() {
 
   const prevNoteId = usePrevious(noteId);
 
-  const rootData = useRootLoaderData();
+  const rootData = useRouteLoaderData<RootClientLoader>($routeId("root"));
 
   const notesDetailData = useLoaderData<NotesDetailClientLoader>();
 

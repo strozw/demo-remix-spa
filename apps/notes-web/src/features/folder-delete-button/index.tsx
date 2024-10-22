@@ -9,7 +9,7 @@ export const FolderDeleteButton = ({ folderId }: { folderId: string }) => {
   return (
     <fetcher.Form
       method="delete"
-      action={$path("/folders/:folderId", { folderId })}
+      action={$path("/folders/:folderId/destroy", { folderId })}
     >
       <Tooltip label="Delete Folder" withArrow position="right">
         <ActionIcon type="submit" color="red" size="xs">

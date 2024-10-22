@@ -5,7 +5,7 @@ import { NoteCreationButton } from "../../features/note-creation-button";
 
 export function GlobalHeader() {
   return (
-    <>
+    <Group>
       <Title order={1} size="h5">
         <Link to="/" style={{ color: "inherit" }}>
           <Group gap="xs">
@@ -18,6 +18,6 @@ export function GlobalHeader() {
       <Group align="flex-end" style={{ marginLeft: "auto" }}>
         <NoteCreationButton />
       </Group>
-    </>
+    </Group>
   );
 }

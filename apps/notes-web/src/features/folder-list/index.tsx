@@ -1,3 +1,4 @@
+import type { RootClientLoader } from "@/app/root";
 import {
   ActionIcon,
   Group,
@@ -10,14 +11,13 @@ import {
   useDisclosure,
 } from "@demo-remix-spa/ui";
 import { IconFolder, IconPlus } from "@demo-remix-spa/ui/icons";
-import { Await, Link } from "@remix-run/react";
-import { $path } from "remix-routes";
-import { useRootLoaderData } from "src/shared/model/remix";
+import { Await, Link, useRouteLoaderData } from "@remix-run/react";
+import { $path, $routeId } from "remix-routes";
 import { FolderCreationForm } from "../folder-creation-form";
 import { FolderDeleteButton } from "../folder-delete-button";
 
 export const FolderList = () => {
-  const rootData = useRootLoaderData();
+  const rootData = useRouteLoaderData<RootClientLoader>($routeId("root"));
 
   const [opened, { close, open }] = useDisclosure(false);
 

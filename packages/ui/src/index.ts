@@ -2,8 +2,8 @@ export { UiProvider } from "./provider";
 export { Navbar } from "./navbar";
 export { useDisclosure } from "@mantine/hooks";
 export {
-	AppShell,
-	Burger,
+  AppShell,
+  Burger,
   Stack,
   Group,
   Textarea,
@@ -18,5 +18,7 @@ export {
   Tooltip,
   Popover,
   Table,
+  Box,
+  Flex,
 } from "@mantine/core";
 export { notifications } from "@mantine/notifications";

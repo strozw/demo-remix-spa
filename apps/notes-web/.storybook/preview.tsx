@@ -1,5 +1,7 @@
+import { AppShell } from "@/app/app-shell";
 import type { Preview } from "@storybook/react";
-import { AppShell } from "src/app/app-shell";
+
+import "@/app/global.css";
 
 const preview: Preview = {
   parameters: {

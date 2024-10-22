@@ -1,4 +1,10 @@
-import {Group, useDisclosure, AppShell, Burger } from "@demo-remix-spa/ui";
+import {
+  AppShell,
+  Box,
+  Burger,
+  Group,
+  useDisclosure,
+} from "@demo-remix-spa/ui";
 import type { PropsWithChildren } from "react";
 interface AppSidebarLayout
   extends PropsWithChildren<{
@@ -39,7 +45,7 @@ export const AppSidebarLayout = ({
             visibleFrom="sm"
             size="sm"
           />
-          {header}
+          <Box style={{ flexGrow: 1 }}>{header}</Box>
         </Group>
       </AppShell.Header>
 

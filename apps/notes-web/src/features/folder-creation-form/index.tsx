@@ -1,17 +1,19 @@
+import type { FoldersClientAction } from "@/app/routes/folders.new";
 import { Button, Stack, TextInput } from "@demo-remix-spa/ui";
-import { Form } from "@remix-run/react";
-import { useFoldersActionFetcher } from "src/shared/model/remix";
+import { useFetcher } from "@remix-run/react";
+import { $path } from "remix-routes";
 
 export const FolderCreationForm = ({ onSubmit }: { onSubmit?: () => void }) => {
-  const { submit } = useFoldersActionFetcher();
+  const fetcher = useFetcher<FoldersClientAction>();
 
   return (
-    <Form
+    <fetcher.Form
       method="post"
+      action={$path("/folders/new")}
       onSubmit={(event) => {
         event.preventDefault();
 
-        submit(event.currentTarget);
+        fetcher.submit(event.currentTarget);
 
         onSubmit?.();
       }}
@@ -26,6 +28,6 @@ export const FolderCreationForm = ({ onSubmit }: { onSubmit?: () => void }) => {
 
         <Button type="submit">Create Folder</Button>
       </Stack>
-    </Form>
+    </fetcher.Form>
   );
 };
