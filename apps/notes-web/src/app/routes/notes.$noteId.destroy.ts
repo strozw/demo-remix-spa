@@ -25,6 +25,6 @@ export const clientAction = defineClientAction(async ({ params }) => {
       ? $path("/folders/:folderId/notes", {
           folderId: note.folderId,
         })
-      : $path("/folders/uncategorized/notes")
+      : $path("/folders/uncategorized/notes"),
   );
 });

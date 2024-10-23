@@ -6,10 +6,10 @@ export default function handleRequest(
   request: Request,
   responseStatusCode: number,
   _responseHeaders: Headers,
-  remixContext: EntryContext
+  remixContext: EntryContext,
 ) {
   const appHtml = renderToString(
-    <RemixServer context={remixContext} url={request.url} />
+    <RemixServer context={remixContext} url={request.url} />,
   );
 
   const html = `

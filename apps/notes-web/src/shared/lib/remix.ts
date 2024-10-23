@@ -50,7 +50,7 @@ export const defineUseActionFetcher =
             ...params[1],
             action: path,
           }),
-        [submit, path]
+        [submit, path],
       ),
       ...rest,
     };

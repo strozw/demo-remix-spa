@@ -1,26 +1,23 @@
-import {
-	type ClientLoaderFunction,
-	useRouteLoaderData,
-} from "@remix-run/react";
+import { useRouteLoaderData } from "@remix-run/react";
 import { $path, $routeId } from "remix-routes";
 import { wait } from "remix-utils/timers";
 import {
-	defineClientLoader,
-	defineUseLoaderFetcher,
+  defineClientLoader,
+  defineUseLoaderFetcher,
 } from "src/shared/lib/remix";
 
 export const clientLoader = defineClientLoader(async () => {
-	await wait(2000);
+  await wait(2000);
 
-	console.log("aaaaaaaaaaaaaaaaaaaaaaa");
+  console.log("aaaaaaaaaaaaaaaaaaaaaaa");
 
-	return { message: "Test" };
+  return { message: "Test" };
 });
 
 export const useTestLoaderFetch = defineUseLoaderFetcher<typeof clientLoader>(
-	$path("/test"),
+  $path("/test"),
 );
 
 export const useTestLoaderData = () => {
-	return useRouteLoaderData<typeof clientLoader>($routeId("routes/test"));
+  return useRouteLoaderData<typeof clientLoader>($routeId("routes/test"));
 };

@@ -13,6 +13,6 @@ startTransition(() => {
     rootDom,
     <StrictMode>
       <RemixBrowser />
-    </StrictMode>
+    </StrictMode>,
   );
 });

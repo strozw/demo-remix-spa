@@ -1,35 +1,35 @@
 {
-	"name": "@demo-remix-spa/notes-web",
-	"private": true,
-	"sideEffects": false,
-	"type": "module",
-	"scripts": {
-		"build": "remix vite:build",
-		"dev": "remix vite:dev",
-		"test": "vitest run",
-		"preview": "vite preview",
-		"check-types": "tsc",
-		"storybook": "storybook dev -p 6006",
-		"build-storybook": "storybook build"
-	},
-	"dependencies": {
-		"@conform-to/react": "^1.2.2",
-		"@conform-to/zod": "^1.2.2",
-		"@demo-remix-spa/notes-api": "workspace:*",
-		"@demo-remix-spa/ui": "workspace:*",
-		"@remix-run/node": "^2.13.1",
-		"@remix-run/react": "^2.13.1",
-		"fetch-extras": "^0.1.0",
-		"remix-island": "^0.2.0",
-		"remix-routes": "^1.7.7",
-		"remix-utils": "^7.6.0"
-	},
-	"devDependencies": {
-		"@remix-run/dev": "^2.13.1",
-		"@remix-run/testing": "^2.13.1",
-		"remix-development-tools": "^4.2.2"
-	},
-	"engines": {
-		"node": ">=20.0.0"
-	}
+  "name": "@demo-remix-spa/notes-web",
+  "private": true,
+  "sideEffects": false,
+  "type": "module",
+  "scripts": {
+    "build": "remix vite:build",
+    "dev": "remix vite:dev",
+    "test": "vitest run",
+    "preview": "vite preview",
+    "check-types": "tsc",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
+  },
+  "dependencies": {
+    "@conform-to/react": "^1.2.2",
+    "@conform-to/zod": "^1.2.2",
+    "@demo-remix-spa/notes-api": "workspace:*",
+    "@demo-remix-spa/ui": "workspace:*",
+    "@remix-run/node": "^2.13.1",
+    "@remix-run/react": "^2.13.1",
+    "fetch-extras": "^0.1.0",
+    "remix-island": "^0.2.0",
+    "remix-routes": "^1.7.7",
+    "remix-utils": "^7.6.0"
+  },
+  "devDependencies": {
+    "@remix-run/dev": "^2.13.1",
+    "@remix-run/testing": "^2.13.1",
+    "remix-development-tools": "^4.2.2"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
 }

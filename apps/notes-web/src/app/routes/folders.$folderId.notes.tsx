@@ -20,7 +20,7 @@ export const clientLoader = defineClientLoader(({ params }) => {
     notes: notesApiClient.notes
       .$get({
         query: {
-          folderId
+          folderId,
         },
       })
       .then((res) => res.json()),

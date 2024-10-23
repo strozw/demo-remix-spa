@@ -1,10 +1,10 @@
 import { ActionIcon, Tooltip } from "@demo-remix-spa/ui";
 import { IconPlus } from "@demo-remix-spa/ui/icons";
-import { Form, useFetcher } from "@remix-run/react";
+import { useFetcher } from "@remix-run/react";
 import { $path } from "remix-routes";
 
 export const NoteCreationButton = () => {
-  const fetcher = useFetcher()
+  const fetcher = useFetcher();
 
   return (
     <fetcher.Form method="post" action={$path("/notes/new")}>
