@@ -26,7 +26,9 @@ export const FolderCreationForm = ({ onSubmit }: { onSubmit?: () => void }) => {
           name="name"
         />
 
-        <Button type="submit">Create Folder</Button>
+        <Button type="submit" loading={fetcher.state === "submitting"}>
+          Create Folder
+        </Button>
       </Stack>
     </fetcher.Form>
   );

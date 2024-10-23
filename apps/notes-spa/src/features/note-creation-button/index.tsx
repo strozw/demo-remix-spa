@@ -1,5 +1,5 @@
-import { ActionIcon, Tooltip } from "@demo-remix-spa/ui";
-import { IconPlus } from "@demo-remix-spa/ui/icons";
+import { Button, Group } from "@demo-remix-spa/ui";
+import { IconTextPlus } from "@demo-remix-spa/ui/icons";
 import { useFetcher } from "@remix-run/react";
 import { $path } from "remix-routes";
 
@@ -8,11 +8,17 @@ export const NoteCreationButton = () => {
 
   return (
     <fetcher.Form method="post" action={$path("/notes/new")}>
-      <Tooltip label="Create Note" withArrow position="right">
-        <ActionIcon type="submit" aria-label="Create Note">
-          <IconPlus />
-        </ActionIcon>
-      </Tooltip>
+      <Button
+        type="submit"
+        color="blue"
+        loading={fetcher.state === "submitting"}
+        size="xs"
+      >
+        <Group gap="0">
+          <IconTextPlus />
+          <span>New Note</span>
+        </Group>
+      </Button>
     </fetcher.Form>
   );
 };

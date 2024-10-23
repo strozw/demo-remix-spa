@@ -22,7 +22,8 @@
     "build-dev": "NODE_ENV=development vite build --sourcemap inline --emptyOutDir false",
     "start": "node ./dist/bin.js",
     "watch": "wait-on ./dist/bin.js && node --watch ./dist/bin.js",
-    "dev": "pnpm run build-dev --watch & pnpm run watch"
+    "dev": "pnpm run build-dev --watch & pnpm run watch",
+    "check-types": "tsc --noEmit"
   },
   "dependencies": {
     "@hono/node-server": "^1.13.1",

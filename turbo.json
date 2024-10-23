@@ -1,6 +1,6 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "globalDependencies": [".env"],
+  "globalDependencies": [".env", ".env.local"],
   "globalEnv": ["NOTES_DB", "NOTES_API_ALLOW_ORIGIN"],
   "tasks": {
     "build": {

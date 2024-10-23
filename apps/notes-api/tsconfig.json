@@ -1,11 +1,11 @@
 {
-	"extends": "@tsconfig/node-lts",
-	"compilerOptions": {
-		"target": "ES2020",
-		"module": "ESNext",
-		"moduleResolution": "bundler",
-		"esModuleInterop": true,
-		"noEmit": true,
-	},
-	"include": ["src/**/*", "./vite.config.mjs"]
+  "extends": "@tsconfig/node-lts",
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "esModuleInterop": true,
+    "noEmit": true
+  },
+  "include": ["src/**/*", "./vite.config.mjs"]
 }

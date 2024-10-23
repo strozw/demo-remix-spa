@@ -22,21 +22,6 @@ declare module "remix-routes" {
       query: ExportedQuery<import("src/app/root").SearchParams>;
     };
 
-    "/about": {
-      params: never;
-      query: ExportedQuery<import("src/app/routes/about").SearchParams>;
-    };
-
-    "/about/child": {
-      params: never;
-      query: ExportedQuery<import("src/app/routes/about.child").SearchParams>;
-    };
-
-    "/about/data": {
-      params: never;
-      query: ExportedQuery<import("src/app/routes/about.data").SearchParams>;
-    };
-
     "/folders/:folderId/destroy": {
       params: {
         folderId: string | number;
@@ -87,11 +72,6 @@ declare module "remix-routes" {
       params: never;
       query: ExportedQuery<import("src/app/routes/notes.new").SearchParams>;
     };
-
-    "/test": {
-      params: never;
-      query: ExportedQuery<import("src/app/routes/test").SearchParams>;
-    };
   }
 
   type RoutesWithParams = Pick<
@@ -106,17 +86,13 @@ declare module "remix-routes" {
   export type RouteId =
     | "root"
     | "routes/_index"
-    | "routes/about"
-    | "routes/about.child"
-    | "routes/about.data"
     | "routes/folders.$folderId.destroy"
     | "routes/folders.$folderId.notes"
     | "routes/folders.new"
     | "routes/folders.uncategorized.notes"
     | "routes/notes.$noteId"
     | "routes/notes.$noteId.destroy"
-    | "routes/notes.new"
-    | "routes/test";
+    | "routes/notes.new";
 
   export function $path<
     Route extends keyof Routes,

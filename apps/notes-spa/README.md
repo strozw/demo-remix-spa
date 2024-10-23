@@ -32,6 +32,24 @@ pnpm storybook
 pnpm build-storybook
 ```
 
+### Check Apps & Packages types
+
+```
+pnpm check-types
+```
+
+### Lint Apps & Packages codes
+
+```
+pnpm check
+```
+
+### Format Apps & Packages codes
+
+```
+pnpm format
+```
+
 ### Tests Apps & Packages
 
 ```

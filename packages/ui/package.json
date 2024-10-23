@@ -4,9 +4,7 @@
   "description": "",
   "private": true,
   "type": "module",
-  "sideEffects": [
-    "*.css"
-  ],
+  "sideEffects": ["*.css"],
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
@@ -27,14 +25,11 @@
     "build-dev": "NODE_ENV=develop vite build --sourcemap inline",
     "dev": "pnpm build-dev --watch --emptyOutDir false",
     "test": "vitest run",
-    "check-types": "tsc",
+    "check-types": "tsc --noEmit",
     "storybook": "storybook dev -p 6007",
     "build-storybook": "storybook build"
   },
-  "keywords": [
-    "react",
-    "ui"
-  ],
+  "keywords": ["react", "ui"],
   "author": "",
   "license": "ISC",
   "dependencies": {
