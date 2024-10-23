@@ -1,14 +1,13 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "globalDependencies": [".env", ".env.local"],
-  "globalEnv": ["NOTES_DB", "NOTES_API_ALLOW_ORIGIN"],
   "tasks": {
     "build": {
       "outputs": ["dist/**", "build/**"],
       "cache": true
     },
     "build-dev": {
-      "cache": false
+      "outputs": ["dist/**"],
+      "cache": true
     },
     "dev": {
       "dependsOn": ["build-dev"],

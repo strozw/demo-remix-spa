@@ -2,14 +2,12 @@ import type { AppType } from "@demo-remix-spa/notes-api";
 import { throwIfHttpError } from "fetch-extras";
 import { hc } from "hono/client";
 
-const client = hc<AppType>("http://localhost:3000");
+console.log(import.meta.env.VITE_NOTES_API_URL);
 
-export type Client = typeof client;
-
-export const buildClient = (...args: Parameters<typeof hc>): Client =>
+export const buildClient = (...args: Parameters<typeof hc>) =>
   hc<AppType>(...args);
 
-export const notesApiClient = buildClient("http://localhost:3000", {
+export const notesApiClient = buildClient(import.meta.env.VITE_NOTES_API_URL, {
   fetch: async (...params: Parameters<typeof fetch>) =>
     await throwIfHttpError(fetch(...params)),
 });

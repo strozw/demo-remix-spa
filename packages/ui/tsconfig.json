@@ -1,6 +1,6 @@
 {
   "extends": "@tsconfig/vite-react/tsconfig.json",
-  "include": ["src", "vite.config.mjs"],
+  "include": ["src", "vite.config.ts"],
   "compilerOptions": {
     "declaration": true,
     "declarationMap": true,
