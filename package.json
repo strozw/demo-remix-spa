@@ -8,7 +8,8 @@
   "scripts": {
     "turbo": "turbo",
     "build": "pnpm turbo build",
-    "build-api": "pnpm turbo build-api",
+    "build-api": "pnpm build -F=@demo-remix-spa/notes-api",
+    "build-spa": "pnpm build -F=@demo-remix-spa/notes-spa...",
     "build-dev": "pnpm turbo build-dev",
     "build-storybook": "pnpm turbo build-storybook",
     "check": "biome check",
