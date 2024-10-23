@@ -9,6 +9,7 @@
     "turbo": "turbo",
     "build": "dotenvx run -- turbo build",
     "build-dev": "dotenvx run -- turbo build-dev",
+    "start": "dotenvx run -- turbo start",
     "dev": "dotenvx run -- turbo dev",
     "check": "biome check",
     "format": "biome check --fix",
@@ -18,7 +19,12 @@
     "build-storybook": "dotenvx run -- turbo build-storybook",
     "cleanup": "git clean -dx"
   },
-  "keywords": ["demo", "remix", "spa", "monorepo"],
+  "keywords": [
+    "demo",
+    "remix",
+    "spa",
+    "monorepo"
+  ],
   "author": "strozw",
   "license": "ISC",
   "packageManager": "pnpm@9.12.2",

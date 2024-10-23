@@ -4,7 +4,6 @@
   "globalEnv": ["NOTES_DB", "NOTES_API_ALLOW_ORIGIN"],
   "tasks": {
     "build": {
-      "dependsOn": ["^build"],
       "outputs": ["dist/**", "build/**"],
       "cache": true
     },
@@ -12,7 +11,7 @@
       "cache": false
     },
     "dev": {
-      "dependsOn": ["^build-dev"],
+      "dependsOn": ["build-dev"],
       "persistent": true,
       "cache": false
     },
@@ -20,19 +19,20 @@
       "cache": false
     },
     "check-types": {
-      "dependsOn": ["^check-types"]
+      "cache": false
     },
-    "preview": {
+    "start": {
+      "dependsOn": ["build"],
       "persistent": true,
       "cache": false
     },
     "build-storybook": {
-      "dependsOn": ["^build"],
+      "dependsOn": ["build"],
       "outputs": ["storybook-static/**"],
       "cache": true
     },
     "storybook": {
-      "dependsOn": ["^build-dev"],
+      "dependsOn": ["build-dev"],
       "persistent": true,
       "cache": false
     }
