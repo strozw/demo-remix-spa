@@ -3,13 +3,13 @@ import tsconfigPaths from "vite-tsconfig-paths";
 import { defineWorkspace } from "vitest/config";
 
 export default defineWorkspace([
-  // {
-  // 	plugins: [tsconfigPaths()],
-  // 	test: {
-  // 		name: "unit",
-  // 		include: ["src/**/*.test.?(m)[jt]s?(x)"],
-  // 	},
-  // },
+  {
+    plugins: [tsconfigPaths()],
+    test: {
+      name: "unit",
+      include: ["src/**/*.test.?(m)[jt]s?(x)"],
+    },
+  },
   {
     plugins: [tsconfigPaths(), storybookTest()],
     test: {
