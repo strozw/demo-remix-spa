@@ -21,9 +21,9 @@
       "cache": false
     },
     "start": {
-      "dependsOn": ["^build"],
+      "dependsOn": ["@demo-remix-spa/notes-spa#build", "^build"],
       "persistent": true,
-      "cache": false
+      "cache": true
     },
     "build-storybook": {
       "dependsOn": ["^build"],
