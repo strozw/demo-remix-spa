@@ -11,12 +11,7 @@ export default defineWorkspace([
   // 	},
   // },
   {
-    plugins: [
-      tsconfigPaths(),
-      storybookTest({
-        storybookScript: "yarn storybook --ci",
-      }),
-    ],
+    plugins: [tsconfigPaths(), storybookTest()],
     test: {
       name: "component",
       include: ["src/**/*.stories.?(m)[jt]s?(x)"],
