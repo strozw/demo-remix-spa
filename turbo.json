@@ -15,7 +15,7 @@
       "cache": false
     },
     "test": {
-      "cache": false
+      "cache": true
     },
     "check-types": {
       "cache": false
