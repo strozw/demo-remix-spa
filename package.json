@@ -14,8 +14,8 @@
     "build-storybook": "pnpm turbo build-storybook",
     "check:biome": "biome check",
     "check:dprint": "dprint check",
-    "check:types": "turbo check-types",
     "check": "concurrently 'pnpm:check:*' -c auto",
+    "check-types": "turbo check-types",
     "cleanup": "git clean -dx --exclude=node_modules --exclude=.env.local --exclude=.env.*.local",
     "dev": "pnpm turbo dev",
     "format:biome": "pnpm biome check --fix",
@@ -26,7 +26,12 @@
     "test": "pnpm turbo test",
     "check-monorepo": "pnpx sherif"
   },
-  "keywords": ["demo", "remix", "spa", "monorepo"],
+  "keywords": [
+    "demo",
+    "remix",
+    "spa",
+    "monorepo"
+  ],
   "author": "strozw",
   "license": "ISC",
   "packageManager": "pnpm@9.12.2",
