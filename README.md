@@ -2,6 +2,21 @@
 
 Turborepo を使った monorepo 構成で、Remix SPA Mode で構築したアプリを試すために作成したデモ。
 
+## 構成
+
+### Apps
+
+| パス                             | 内容                                                                                                   |
+| -------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| [apps/notes-api](apps/notes-api) | [Hono](https://hono.dev/) による単純な Note とそれを分類する Folder を扱う API                         |
+| [apps/notes-spa](apps/notes-spa) | `notes-api` を利用した [Remix SPA Mode](https://remix.run/docs/en/main/guides/spa-mode) を利用した SPA |
+
+### Packages
+
+| パス                       | 内容                                                                                                                                                 |
+| -------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [packages/ui](packages/ui) | `apps` 内で利用する共通 UI をまとめたもの。Demo なので [Mantine UI](https://mantine.dev/) と関連 package を re-export しているだけのものになっている |
+
 ## Setup
 
 ```sh
