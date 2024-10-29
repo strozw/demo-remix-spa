@@ -9,14 +9,18 @@ import { defineClientLoader } from "src/shared/lib/remix";
 export const clientLoader = defineClientLoader(({ params }) => {
   const { folderId } = $params("/folders/:folderId/notes", params);
 
+  const isUncategorized = folderId === "uncategorized";
+
   return defer({
-    folder: notesApiClient.folders[":id"]
-      .$get({
-        param: {
-          id: folderId,
-        },
-      })
-      .then((res) => res.json()),
+    folder: isUncategorized
+      ? null
+      : notesApiClient.folders[":id"]
+          .$get({
+            param: {
+              id: folderId,
+            },
+          })
+          .then((res) => res.json()),
     notes: notesApiClient.notes
       .$get({
         query: {
@@ -31,14 +35,14 @@ export const meta: MetaFunction = () => {
   return [{ title: "Demo Remix SPA | Uncategorized Notes" }];
 };
 
-export default function Index() {
+export default function FolderNotesPage() {
   const data = useLoaderData<typeof clientLoader>();
 
   return (
     <div className="font-sans p-4">
       <Title order={2}>
         <Await resolve={data?.folder}>
-          {(folder) => <>{folder?.name} Notes</>}
+          {(folder) => <>{folder?.name || "Uncategorized"} Notes</>}
         </Await>
       </Title>
 

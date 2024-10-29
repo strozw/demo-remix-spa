@@ -69,7 +69,9 @@ export const FolderList = () => {
             <NavLink
               w={"calc(100% - 3em)"}
               component={Link}
-              to={$path("/folders/uncategorized/notes")}
+              to={$path("/folders/:folderId/notes", {
+                folderId: "uncategorized",
+              })}
               label={
                 <Group>
                   <IconFolder />

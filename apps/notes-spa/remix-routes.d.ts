@@ -37,11 +37,6 @@ declare module "remix-routes" {
       query: ExportedQuery<import('src/app/routes/folders_.new').SearchParams>,
     };
   
-    "/folders/uncategorized/notes": {
-      params: never,
-      query: ExportedQuery<import('src/app/routes/folders.uncategorized.notes').SearchParams>,
-    };
-  
     "/notes/:noteId": {
       params: {
         noteId: string | number;
@@ -76,7 +71,6 @@ declare module "remix-routes" {
     | 'routes/folders_.$folderId.destroy'
     | 'routes/folders_.new'
     | 'routes/folders.$folderId.notes'
-    | 'routes/folders.uncategorized.notes'
     | 'routes/notes_.$noteId.destroy'
     | 'routes/notes_.new'
     | 'routes/notes.$noteId';
