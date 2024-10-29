@@ -6,12 +6,15 @@ import { $path } from "remix-routes";
 export const NoteCreationButton = () => {
   const fetcher = useFetcher();
 
+  const isSubmitting = fetcher.state === "submitting";
+
   return (
     <fetcher.Form method="post" action={$path("/notes/new")}>
       <Button
         type="submit"
         color="blue"
-        loading={fetcher.state === "submitting"}
+        disabled={isSubmitting}
+        loading={isSubmitting}
         size="xs"
       >
         <Group gap="0">

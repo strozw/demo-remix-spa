@@ -159,9 +159,7 @@ export default function NotesDetailPage() {
               {(folders) => (
                 <NativeSelect
                   label="Folder"
-                  key={fields.folderId.key}
                   name={fields.folderId.name}
-                  // defaultValue={notesDetailData.folderId ?? ""}
                   error={fields.folderId.errors}
                   data={[
                     { value: "", label: "Uncategorzied" },

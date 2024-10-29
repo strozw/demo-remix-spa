@@ -1,4 +1,4 @@
-import type { FoldersClientAction } from "@/app/routes/folders.new";
+import type { FoldersClientAction } from "@/app/routes/folders_.new";
 import { Button, Stack, TextInput } from "@demo-remix-spa/ui";
 import { useFetcher } from "@remix-run/react";
 import { $path } from "remix-routes";
