@@ -24,5 +24,5 @@ serve(
   },
   () => {
     console.log(`notes-api server was started on port ${port}`);
-  }
+  },
 );
