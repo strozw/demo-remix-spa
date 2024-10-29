@@ -3,7 +3,7 @@ import dts from "vite-plugin-dts";
 import { externalizeDeps } from "vite-plugin-externalize-deps";
 
 export default defineConfig({
-  plugins: [externalizeDeps(), dts({ rollupTypes: false })],
+  plugins: [externalizeDeps(), dts({ rollupTypes: true })],
   build: {
     target: false,
     emptyOutDir: true,

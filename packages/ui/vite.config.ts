@@ -10,7 +10,7 @@ export default defineConfig({
     tsconfigPaths(),
     reactPlugin(),
     happyCssModules({ pattern: "./src/**/*.module.css" }),
-    dts(),
+    dts({ rollupTypes: true }),
     externalizeDeps(),
   ],
   build: {
