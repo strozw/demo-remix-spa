@@ -1,6 +1,7 @@
 import { Title } from "@demo-remix-spa/ui";
 import type { MetaFunction } from "@remix-run/node";
-import { Await, defer, useLoaderData } from "@remix-run/react";
+import { Await, defer, useLoaderData, useRouteError } from "@remix-run/react";
+import { HttpError } from "fetch-extras";
 import { $params } from "remix-routes";
 import { NotesTable } from "src/features/notes-table";
 import { notesApiClient } from "src/shared/api/notes-api";
@@ -56,6 +57,28 @@ export default function FolderNotesPage() {
           />
         )}
       </Await>
+    </div>
+  );
+}
+
+export function ErrorBoundary() {
+  const error = useRouteError();
+
+  const isErrorInstance = error instanceof Error;
+  const isHttpErrorInstance = error instanceof HttpError;
+
+  console.log({
+    error,
+    isHttpError: error instanceof HttpError,
+    isError: error instanceof Error,
+  });
+
+  return (
+    <div className="font-sans p-4">
+      <Title order={2}>Error</Title>
+      <p>{isErrorInstance ? error.message : ""}</p>
+
+      <pre>{JSON.stringify(error)}</pre>
     </div>
   );
 }
