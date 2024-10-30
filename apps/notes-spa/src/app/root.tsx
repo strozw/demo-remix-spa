@@ -24,6 +24,13 @@ export const clientLoader = defineClientLoader(async ({ request }) => {
 
 export type RootClientLoader = typeof clientLoader;
 
+/**
+ * 開発時に、script や style を挿入するブラウザ拡張機能を利用している環境で hydration についての waning がでるため、
+ * その回避策として、`remix-island` を利用している。
+ *
+ * @see {@url https://remix.run/docs/en/main/guides/gotchas#browser-extensions-injecting-code}
+ * @see {@url https://github.com/Xiphe/remix-island}
+ */
 export const Head = createHead(() => (
   <>
     <Meta />
