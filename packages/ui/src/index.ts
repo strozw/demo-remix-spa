@@ -4,6 +4,7 @@ export { useDisclosure } from "@mantine/hooks";
 export {
   AppShell,
   Burger,
+  Container,
   Stack,
   Group,
   Textarea,

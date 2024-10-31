@@ -11,12 +11,14 @@ import {
   Title,
 } from "@demo-remix-spa/ui";
 import { IconNotes, IconRecycle } from "@demo-remix-spa/ui/icons";
+import type { LinksFunction } from "@remix-run/node";
 import {
   Await,
   json,
   useFetcher,
   useLoaderData,
   useParams,
+  useRouteError,
   useRouteLoaderData,
 } from "@remix-run/react";
 import { useEffect } from "react";
@@ -202,3 +204,29 @@ export default function NotesDetailPage() {
     </Stack>
   );
 }
+
+export function ErrorBoundary() {
+  const error = useRouteError();
+
+  const isErrorInstance = error instanceof Error;
+
+  return (
+    <div className="font-sans p-4">
+      <Title order={2}>Error in Note Detail Page</Title>
+      <p>{isErrorInstance ? error.message : ""}</p>
+
+      <pre>{JSON.stringify(error)}</pre>
+    </div>
+  );
+}
+
+export const links: LinksFunction = () => [
+  {
+    rel: "icon",
+    href: "https://dummyjson.com/icon/note/100?type=png",
+    type: "image/png",
+  },
+];
+
+export const meta = ({ data }: { data: { id: string } }) =>
+  data?.id ? [{ title: `Note: ${data.id} | Note Apps` }] : [];
