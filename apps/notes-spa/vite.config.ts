@@ -15,9 +15,11 @@ export default defineConfig({
       ssr: false,
       appDirectory: "src/app",
       future: {
+        v3_singleFetch: true,
         v3_fetcherPersist: true,
         v3_relativeSplatPath: true,
         v3_throwAbortReason: true,
+        v3_lazyRouteDiscovery: true,
       },
     }),
     remixRoutes({ outDir: "./" }),

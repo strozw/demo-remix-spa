@@ -14,7 +14,6 @@ import { IconNotes, IconRecycle } from "@demo-remix-spa/ui/icons";
 import type { LinksFunction } from "@remix-run/node";
 import {
   Await,
-  json,
   useFetcher,
   useLoaderData,
   useParams,
@@ -66,7 +65,7 @@ export const clientAction = defineClientAction(async ({ request, params }) => {
   const submission = parseWithZod(formData, { schema: updateSchema });
 
   if (submission.status !== "success") {
-    return json(submission.reply());
+    return submission.reply();
   }
 
   try {
@@ -80,7 +79,7 @@ export const clientAction = defineClientAction(async ({ request, params }) => {
     });
   }
 
-  return json(submission.reply());
+  return submission.reply();
 });
 
 type NotesDetailClientAction = typeof clientAction;
@@ -163,7 +162,7 @@ export default function NotesDetailPage() {
                   label="Folder"
                   name={fields.folderId.name}
                   error={fields.folderId.errors}
-                  value={fields.folderId.value}
+                  defaultValue={fields.folderId.value}
                   data={[
                     { value: "", label: "Uncategorzied" },
                     ...(folders ?? []).map((folder) => ({
