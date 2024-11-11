@@ -162,7 +162,7 @@ export default function NotesDetailPage() {
                   label="Folder"
                   name={fields.folderId.name}
                   error={fields.folderId.errors}
-                  value={fields.folderId.value}
+                  defaultValue={fields.folderId.value}
                   data={[
                     { value: "", label: "Uncategorzied" },
                     ...(folders ?? []).map((folder) => ({
