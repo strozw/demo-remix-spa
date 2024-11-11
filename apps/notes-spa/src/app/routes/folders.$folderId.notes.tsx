@@ -1,6 +1,6 @@
 import { Title } from "@demo-remix-spa/ui";
 import type { MetaFunction } from "@remix-run/node";
-import { Await, defer, useLoaderData, useRouteError } from "@remix-run/react";
+import { Await, useLoaderData, useRouteError } from "@remix-run/react";
 import { $params } from "remix-routes";
 import { NotesTable } from "src/features/notes-table";
 import { notesApiClient } from "src/shared/api/notes-api";
@@ -11,7 +11,7 @@ export const clientLoader = defineClientLoader(({ params }) => {
 
   const isUncategorized = folderId === "uncategorized";
 
-  return defer({
+  return {
     folder: isUncategorized
       ? null
       : notesApiClient.folders[":id"]
@@ -28,7 +28,7 @@ export const clientLoader = defineClientLoader(({ params }) => {
         },
       })
       .then((res) => res.json()),
-  });
+  };
 });
 
 export const meta: MetaFunction = () => {
