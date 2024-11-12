@@ -5,7 +5,6 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
-  defer,
   isRouteErrorResponse,
   useRouteError,
 } from "@remix-run/react";
@@ -23,9 +22,9 @@ import { AppShell } from "./app-shell";
 import errorStyle from "./error.module.css";
 
 export const clientLoader = defineClientLoader(async ({ request }) => {
-  return defer({
+  return {
     folders: notesApiClient.folders.$get().then((res) => res.json()),
-  });
+  };
 });
 
 export type RootClientLoader = typeof clientLoader;
