@@ -11,6 +11,7 @@ export default defineConfig({
     lib: {
       entry: {
         index: "src/index.ts",
+        lambda: "src/lambda.ts",
         bin: "src/bin.ts",
       },
       formats: ["es"],
