@@ -78,9 +78,9 @@ export function ErrorBoundary() {
       isRouteErrorResponse(error)
         ? `${error.status} ${error.statusText}`
         : isErrorInstance
-          ? error.message
-          : "Unknown Error",
-    [isErrorInstance, error],
+        ? error.message
+        : "Unknown Error",
+    [isErrorInstance, error]
   );
 
   return (

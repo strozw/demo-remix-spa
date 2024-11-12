@@ -13,7 +13,7 @@
       "cache": true
     },
     "dev": {
-      "dependsOn": ["^build-dev"],
+      "dependsOn": ["build-dev"],
       "persistent": true,
       "cache": false
     },

@@ -1,18 +1,18 @@
 import { Title } from "@demo-remix-spa/ui";
 import type { MetaFunction } from "@remix-run/node";
-import { Await, defer, useLoaderData } from "@remix-run/react";
+import { Await, useLoaderData } from "@remix-run/react";
 import { NotesTable } from "src/features/notes-table";
 import { notesApiClient } from "src/shared/api/notes-api";
 import { defineClientLoader } from "src/shared/lib/remix";
 
 export const clientLoader = defineClientLoader(() => {
-  return defer({
+  return {
     notes: notesApiClient.notes
       .$get({
         query: {},
       })
       .then((res) => res.json()),
-  });
+  };
 });
 
 export const meta: MetaFunction = () => {
